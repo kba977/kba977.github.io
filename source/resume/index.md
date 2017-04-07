@@ -1,5 +1,4 @@
 ---
-title: resume
 date: 2016-01-27 15:07:07
 comments: false
 ---
