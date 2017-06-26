@@ -47,16 +47,16 @@ comments: false
 
 ##### 二. 图片浏览器 
 **用到的技术：**
-　　Python的著名爬虫框架Scrapy，redis 缓存，Python的web应用框架flask，数据库mongodb, Swift的著名网络请求框架Alamofire 和 图片异步下载框架 Kingfisher， 定时任务 Cron。  
+　　Python的著名爬虫框架 Scrapy, redis 缓存, Python的web应用框架flask, 数据库mongodb, Swift的著名网络请求框架 Alamofire 和 图片异步下载框架 Kingfisher, 定时任务 Cron。  
 **描述：**
-　　假期简单学习了Swift, 就试着做个东西练练手，主要功能是通过Scrapy在网页上定时抓取图片信息, 之后通过redis缓存去重并存在 mongo数据库(只是简单会用)中, 然后用 Flask 编写应用程序接口(API), 接着客户端使用 Swift 的 Alamofire请求接口，Kingfisher 下载缓存图片, 在app 上浏览抓取到的图片
+　　假期简单学习了Swift, 就试着做个东西练练手, 主要功能是通过Scrapy在网页上定时抓取图片信息, 之后通过redis缓存去重并存在 mongo 数据库中, 然后用 Flask 编写应用程序接口(API), 接着客户端使用 Swift 的 Alamofire 请求接口, Kingfisher 下载缓存图片, 在app 上浏览抓取到的图片
 
 ##### 三. 抓取网络数据+数据可视化 
 **用到的技术：**
-　　Scrapy爬虫框架加上使用网上抓取的ip地址轮训，抓取了某网站六个月的帖子，并收集了帖子相关信息并使用highchart将数据可视化了出来。具体的效果见 [数据统计](http://7xs4ug.com1.z0.glb.clouddn.com/%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1.pdf)
+　　Scrapy爬虫框架加上使用网上抓取的ip地址轮训, 抓取了某网站六个月的帖子, 并收集了帖子相关信息并使用highchart将数据可视化了出来。 具体的效果见 [数据统计](http://7xs4ug.com1.z0.glb.clouddn.com/%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1.pdf)
 **描述：**
-　　之前学习Scrapy爬虫框架的时候，只是简单的抓取了数据并且存库，借着这个项目，学习了将存库(mongodb)
-了的数据展示出来，对用户友好可视。期间学习了用 highcharts 这个前端图表框架的使用。
+　　之前学习Scrapy爬虫框架的时候, 只是简单的抓取了数据并且存库, 借着这个项目, 学习了将存库(mongodb)
+了的数据展示出来, 对用户友好可视。期间学习了用 highcharts 这个前端图表框架的使用。
 
 ---
 #### 自我介绍
@@ -67,9 +67,9 @@ comments: false
 - 常用 git 和 github 来分享和管理代码
 - 崇尚技术, 喜欢自由, 对世界有着强烈的好奇心
 - 经常逛豆瓣、知乎、V2EX、Quora、SegmentFault、StackoverFlow等社区
-- 喜欢新鲜简单的事物, 喜欢 python, 熟悉 Scrapy, BeautifulSoup, Django, Flask 等框架
+- 喜欢新鲜的事物, 喜欢 python, 熟悉 Scrapy, BeautifulSoup, Django, Flask 等框架
 
 ---
 
 #### 致谢
-　　感谢您花时间阅读我的简历，期待能有机会和您共事。
+　　感谢您花时间阅读我的简历, 期待能有机会和您共事。
