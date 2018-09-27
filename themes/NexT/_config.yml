@@ -301,19 +301,19 @@ swiftype_key: QmHEhWuDFZMPxZ1LcfFx
 #baidu_analytics:
 
 # Duoshuo ShortName
-duoshuo_shortname: kba977
+# duoshuo_shortname: kba977
 
 # Disqus
-# disqus:
-#   enable: false
-#   shortname:
-#   count: true
+disqus:
+  enable: true
+  shortname: kba977-github-io
+  count: true
 
 # Hypercomments
 #hypercomments_id:
 
 # Gentie productKey
-#gentie_productKey:
+# gentie_productKey:
 
 # changyan
 changyan:
@@ -486,7 +486,7 @@ use_motion: true
 fancybox: true
 
 # Canvas-nest
-canvas_nest: true
+canvas_nest: false
 
 #three_waves
 three_waves: false

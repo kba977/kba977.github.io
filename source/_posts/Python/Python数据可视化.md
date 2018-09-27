@@ -15,7 +15,7 @@ plt.plot([1,3,2,4])
 plt.ylabel('some number')
 plt.show()
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/1.png?)
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6xgi5gcj30au074a9y.jpg)
 
 <!-- more -->
 
@@ -27,7 +27,7 @@ plot()一个通用的命令, 可以输入任意多的参数。例如, 画y和x�
 plt.plot([1,2,3,4], [1,4,9,16])
 plt.show()
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/2.png?)
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6xgy8ekj30ab074q2s.jpg)
 
 对于每对x,y参数, 都可以加上一个可选的第三参数, 控制画图中的**颜色**和**线型**。   
 控制字符的字母与matlab是统一的，并且颜色控制和线型控制可以叠加。默认的控制字符串是'b-'，是**蓝色实线**。假如，你想画红色圆点，你可以通过以下指令来实现:
@@ -37,7 +37,7 @@ plt.plot([1,2,3,4], [1,4,9,16], 'ro')
 plt.axis([0, 6, 0, 20])
 plt.show()
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/3.png?)
+![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6xhenppj30a6074dfn.jpg)
 
 上面例子里的axis()命令给定了坐标范围, 格式是[xmin, xmax, ymin, ymax], 上图表示x轴从0-6, y轴从0-20。
 
@@ -55,21 +55,21 @@ t = np.arange(0., 5., 0.2)
 plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^')
 plt.show()
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/4.png?)
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6xid3hoj30ac074q2t.jpg)
 
 我们可以通过`linewidth`来设置线宽
 ``` python
 plt.plot([1,2,3,4], [1,4,9,16],linewidth=2.0)
 plt.show()
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/5.png?)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6xk8rgsj30ab074t8k.jpg)
 
 通过设定`set_antialiased`来确定是否消除锯齿
 ``` python
 line, = plt.plot([1,2,3,4], [1,4,9,16], '-')
 line.set_antialiased(False) # 关闭反锯齿
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/6.png?)
+![](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6xl5oryj30ab074a9w.jpg)
 
 我们也可以用lines = plot(x1,y1,x2,y2)来画两条线。可以使用`setp()`命令，可以像MATLAB一样设置几条线的性质。 setp可以使用python 关键词，也可用MATLAB格式的字符串。
 ``` python
@@ -79,7 +79,7 @@ plt.setp(lines, color='r', linewidth=2.0)
 # or MATLAB style string value pairs
 plt.setp(lines, 'color', 'r', 'linewidth', 2.0)
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/7.png?)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6xlnaoxj30ab074mx2.jpg)
 
 ### 修改坐标范围
 
@@ -104,7 +104,7 @@ xlim(-2.5, 2.5)
 ylim(-1, 1)
 plt.plot(x, y1)
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/8.png?)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6xm55dkj30ai074dfu.jpg)
 
 ### 创建子图
 
@@ -128,7 +128,7 @@ plt.subplot(212)
 plt.plot(t2, np.cos(2*np.pi*t2), 'r--')
 plt.show()
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/9.png?)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6xn2g5rj30ai074mxa.jpg)
 
 
 你可以多次使用figure命令来产生多个图，其中，图片号按顺序增加。这里，要注意一个概念当前图和当前坐标。所有绘图操作仅对当前图和当前坐标有效。通常，你并不需要考虑这些事，下面的这个例子为大家演示这一细节。
@@ -149,8 +149,8 @@ plt.figure(1)                # 切换到figure 1 ; 子图subplot(212)仍旧是�
 plt.subplot(211)             # 令子图subplot(211)成为figure1的当前图
 plt.title('Easy as 1,2,3')   # 添加subplot 211 的标题
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/10-1.png?)
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/10-2.png?)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6xnz27rj30af07e747.jpg)
+![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6xox7otj30af074t8j.jpg)
 
 ### 使用text添加文字
 
@@ -178,7 +178,7 @@ plt.axis([40, 160, 0, 0.03])
 plt.grid(True)
 plt.show()
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/11.png?)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6xpvfv5j30b807taa2.jpg)
 
 和前面的lines的用法一样，你可以通过在`text()`输入参数或使用`setp()`来改变文字样式
 
@@ -187,7 +187,7 @@ t0 = plt.text(0.35,0.5,'my text')
 plt.setp(t0, color='b',fontsize=24)
 t = plt.xlabel('my data', fontsize=14, color='red')
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/12.png?)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6xqrwvoj30af07njr9.jpg)
 
 ### 注释文本
 
@@ -210,7 +210,7 @@ plt.annotate('local max', xy=(2, 1), xytext=(3, 1.5),
 plt.ylim(-2,2)
 plt.show()
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/13.png?)
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6xr9khdj30ai074glo.jpg)
 
 ### 添加图例   
 本教程将描述几种添加图例的方法。在编程开始前，我们先简单介绍一下在图例中几个需要用到的概念   
@@ -228,7 +228,7 @@ line_down, = plt.plot([3,2,1], label='Line 1')
 plt.legend()
 plt.show()
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/14.png?)
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6xrq6vvj30ae074a9x.jpg)
 
 添加图例的位置可以用关键词loc来指定
 
@@ -251,4 +251,4 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
 plt.show()
 ```
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/15.png?)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6xsr0kvj30ae07oaa1.jpg)

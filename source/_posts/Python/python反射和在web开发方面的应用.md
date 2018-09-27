@@ -1,8 +1,10 @@
 ---
 title: python反射和在web开发方面的应用
-tags: [python]
+tags: [Python]
 categories: [Web开发]
+date: 2017-12-03 15:08:13
 ---
+
 
 　　有时候我们会碰到这样的需求，需要执行对象的某个方法，或是需要对对象的某个字段赋值，而方法名或是字段名在编码代码时并不能确定，需要通过参数传递字符串的形式输入。举个具体的例子：当我们需要实现一个通用的DBM框架时，可能需要对数据对象的字段赋值，但我们无法预知用到这个框架的数据对象都有些什么字段，换言之，我们在写框架的时候需要通过某种机制访问未知的属性。
 
@@ -79,16 +81,16 @@ if __name__ == '__main__':
 
 当传入的方法名为 `page`, 参数为 `{"node_id":1, "title":"xxxxx", "keyword":"aaaaaa"}`时, 返回错误。
 
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/python%E5%8F%8D%E5%B0%84%E5%92%8C%E5%9C%A8web%E5%BC%80%E5%8F%91%E6%96%B9%E9%9D%A2%E7%9A%84%E5%BA%94%E7%94%A8/1.png?)
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6xelu3dj31kw0ucwkm.jpg)
 
 ### 2. 已知函数, 并带有参数
 
 当传入的方法名为 `a`, 参数为`{"a":"a"}`, 结果返回了之前`a`函数中的return值`([1,2,3,4])`。
 
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/python%E5%8F%8D%E5%B0%84%E5%92%8C%E5%9C%A8web%E5%BC%80%E5%8F%91%E6%96%B9%E9%9D%A2%E7%9A%84%E5%BA%94%E7%94%A8/2.png?)
+![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6xf7h5jj31kw0q3abx.jpg)
 
 ### 3. 已知函数, 不带参数
 
 当传入的方法名为 `b`, 参数为`{}`(空), 结果返回了之前`b`函数中的return值`1`。
 
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/python%E5%8F%8D%E5%B0%84%E5%92%8C%E5%9C%A8web%E5%BC%80%E5%8F%91%E6%96%B9%E9%9D%A2%E7%9A%84%E5%BA%94%E7%94%A8/3.png?)
+![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6xfnrpyj31kw0s8dhk.jpg)

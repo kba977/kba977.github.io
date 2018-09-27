@@ -10,14 +10,14 @@ categories: [Python]
 
 如下图：
 
-![](http://ww4.sinaimg.cn/large/5e515a93jw1f0ehcx9jzrj20ct0a3dif.jpg)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6xtoegtj30ct0a3dif.jpg)
 
 其中，每本都是以名字+超链接的方式，于是激起了我写个小程序保存这些资源的欲望，顺便也能练习一些不太熟练的小爬虫 : ) 。 好了，我们开始吧！
 
 <!-- more -->
 
 先展示一下成果给大家看嗯: 如图
-![](http://ww2.sinaimg.cn/large/5e515a93jw1f0ehf51yq4j20fa0a675v.jpg)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6xuvzf0j30fa0a675v.jpg)
 
 每本书都很有条理的保存在本地文档中，结果还是挺满意的哈。　　
 

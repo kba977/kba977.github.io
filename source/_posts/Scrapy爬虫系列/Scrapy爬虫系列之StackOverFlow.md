@@ -16,7 +16,7 @@ scrapy startproject stack
 ```
 这样一个工程便建成功了, 这时, 你会在当前目录下发现一个叫做`stack`的文件夹, 这便是Scrapy为我们生产的工程目录。
 其结构如下图所示
-![](http://ww2.sinaimg.cn/large/5e515a93gw1f1jt4fvaelj21060am3zr.jpg)
+![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6wxfzx7j31060am3zr.jpg)
 
 <!-- more -->
 
@@ -131,11 +131,11 @@ scrapy crawl stack -o data.json
 之后便可在**mongodb**数据库和**data.json**文件中看到抓取下来的数据。
 
 **mongo**
-![mongo](http://ww2.sinaimg.cn/large/5e515a93jw1f1k2zpm4mwj20zy0eimzt.jpg)
+![mongo](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6wy9vkoj30zy0eimzt.jpg)
 mongodb的简单使用方法可以参考我的另外一篇笔记{% post_link mongoDB简单用法 %}。
 
 
 **data.json**
-![data.json](http://ww2.sinaimg.cn/large/5e515a93jw1f1k2hm5w2nj21gk0r07wh.jpg)
+![data.json](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6x0d1vfj31gk0r07wh.jpg)
 
 (完)

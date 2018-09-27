@@ -9,10 +9,10 @@ categories: [Scrapy爬虫系列]
 一直想写一个系列博客, 也一直想总结一下自己学习Scrapy遇到的坑和学习到的姿势, 所以有了一下几篇Scrapy的系列博客, 如有错误欢迎指出  ：）
 </blockquote>
 
-1. {% post_link Scrapy爬虫系列之StackOverFlow %}
-2. {% post_link Scrapy爬虫系列之极客学院视频 %}
-3. {% post_link Scrapy爬虫系列之豆瓣电影Top250 %}
-4. {% post_link Scrapy爬虫系列之一个整站爬取 %}
+1. {% post_link Scrapy爬虫系列/Scrapy爬虫系列之StackOverFlow %}
+2. {% post_link Scrapy爬虫系列/Scrapy爬虫系列之极客学院视频 %}
+3. {% post_link Scrapy爬虫系列/Scrapy爬虫系列之豆瓣电影Top250 %}
+4. {% post_link Scrapy爬虫系列/Scrapy爬虫系列之一个整站爬取 %}
 
 其中每篇文章侧重点都不相同
 

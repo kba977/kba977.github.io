@@ -13,7 +13,7 @@ categories: [网络安全]
     -u: 指定注入点url
 
 **结果:**
-![1.png](http://ww3.sinaimg.cn/large/5e515a93jw1f13lc1yxe4j20hw07hq4a.jpg)
+![1.png](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6ym82ujj30hw07hq4a.jpg)
 
 如图所示: 数据库是 `MySQL`
 
@@ -29,7 +29,7 @@ categories: [网络安全]
     --dbs: dbs前面有两条杠，请看清楚。
 
 **结果:**
-![2.png](http://ww1.sinaimg.cn/large/5e515a93jw1f13lbsa2y1j20hz07bta1.jpg)
+![2.png](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6yn4xmvj30hz07bta1.jpg)
 
 如图所示： 有 `dbracpro28` 和 `information_schema`两个数据库
 
@@ -42,7 +42,7 @@ categories: [网络安全]
     -D: 指定具体数据库 
 
 **结果:**
-![3.png](http://ww4.sinaimg.cn/large/5e515a93jw1f13lbhloskj20hz0a875r.jpg)
+![3.png](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6yo3muyj30hz0a875r.jpg)
 
 如图所示: `dbracpro28` 数据看有 34 个表
 
@@ -56,7 +56,7 @@ categories: [网络安全]
     -T: 指定表 
 
 **结果:**
-![4.png](http://ww3.sinaimg.cn/large/5e515a93jw1f13lb6r6trj20i109zwg7.jpg)
+![4.png](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6yqh74gj30i109zwg7.jpg)
 
 如图所示: `admin` 表中有以上 4 个字段
 
@@ -71,6 +71,6 @@ categories: [网络安全]
     -C: 指定字段
 
 **结果:**
-![5.png](http://ww1.sinaimg.cn/large/5e515a93jw1f13lagqwekj20hw07hq4a.jpg)
+![5.png](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6yrfotnj30hw07hq4a.jpg)
 
 如图所示: `userna`, 和 `pwd` 就被我们扫出来啦~ 然后找到后台, 用它们愉快的登陆吧~~~ ：）

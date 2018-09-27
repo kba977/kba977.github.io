@@ -12,12 +12,12 @@ categories: [Scrapy爬虫系列]
 
 本次我们要爬取的站是我个人非常喜欢的一个站点， 即韩寒的[一个](http://caodan.org), 每天会更新一张图片, 一句话, 一篇文章和一个问答, 页面十分简洁。如下图所示:
 
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Ones/1-1.png?)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6x51ig6j30t40qigy9.jpg)
 
 <!-- more -->
 
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Ones/1-2.png?)
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Ones/1-3.png?)
+![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6x6hk3ij30ts0ik44v.jpg)
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6x79cyfj30tg0hw447.jpg)
 
 # 1. 定义爬虫内容 item.py
 首先定义我们感兴趣的内容, 按照 **photo**, **article**, **ask** 分别爬取。
@@ -201,11 +201,11 @@ IMAGES_STORE = '.'
 
 如下图:
 
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Ones/2.png?)
+![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6x8a94mj31am0uqk21.jpg)
 
 同时下载的图片(妈妈再也不怕我找不到精美图片了)
 
-![](http://7xrahm.com1.z0.glb.clouddn.com/blog/Ones/3.png?)
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6xas5rdj31he11chdt.jpg)
 
 项目代码, [点我](https://github.com/kba977/Scrapy_Projects)下载。
 

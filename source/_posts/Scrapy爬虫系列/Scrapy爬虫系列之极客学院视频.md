@@ -84,7 +84,7 @@ class CourseSpider(Spider):
 # 3. 结果
 ---
 写好后保存然后在目录下运行 `scrapy crawl course -o data.json` 等待一会, 即可在目录下看到 `data.json` 文件如下：
-![](http://ww1.sinaimg.cn/large/5e515a93gw1f0nbxi69b5j20qi08kwlu.jpg)
+![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6x16l7jj30qi08kwlu.jpg)
 
 项目代码, [点我](https://github.com/kba977/Scrapy_Projects)下载。
 
