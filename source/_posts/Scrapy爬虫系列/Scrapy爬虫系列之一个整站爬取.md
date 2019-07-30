@@ -12,12 +12,12 @@ categories: [Scrapy爬虫系列]
 
 本次我们要爬取的站是我个人非常喜欢的一个站点， 即韩寒的[一个](http://caodan.org), 每天会更新一张图片, 一句话, 一篇文章和一个问答, 页面十分简洁。如下图所示:
 
-![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6x51ig6j30t40qigy9.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/1_一张图片.jpg)
 
 <!-- more -->
 
-![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6x6hk3ij30ts0ik44v.jpg)
-![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6x79cyfj30tg0hw447.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/2_一篇文章.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/3_一个回答.jpg)
 
 # 1. 定义爬虫内容 item.py
 首先定义我们感兴趣的内容, 按照 **photo**, **article**, **ask** 分别爬取。
@@ -201,11 +201,11 @@ IMAGES_STORE = '.'
 
 如下图:
 
-![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6x8a94mj31am0uqk21.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/4_数据入库.jpg)
 
 同时下载的图片(妈妈再也不怕我找不到精美图片了)
 
-![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6xas5rdj31he11chdt.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/5_效果图.jpg)
 
 项目代码, [点我](https://github.com/kba977/Scrapy_Projects)下载。
 

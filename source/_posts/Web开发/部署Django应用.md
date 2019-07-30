@@ -141,7 +141,7 @@ python manage.py migrate
 python manage.py runserver 0.0.0.0:8000
 ```
 
-![1.png](https://ws2.sinaimg.cn/large/006tNc79gy1fvo7ltbyqij31kw0hsn29.jpg)
+![1.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/部署Django应用/1.jpg)
 
 这只是一个测试, 我们将不会使用 `runserver` 来跑起我们的应用, 而是使用另外一个更加适合的工具
 
@@ -327,7 +327,7 @@ sudo service nginx restart
 # 最终测试
 这时, 你的应用应该已经跑起, 打开浏览器并查看:
 
-![2.png](https://ws1.sinaimg.cn/large/006tNc79gy1fvo7luqegsj31kw0i579f.jpg)
+![2.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/部署Django应用/2.jpg)
 
 最终测试时, 我习惯重启机器, 并查看应用是否能够自动重启:
 

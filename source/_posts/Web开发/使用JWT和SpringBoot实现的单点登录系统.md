@@ -22,7 +22,7 @@ date: 2017-12-04 21:35:21
 1. 1 个认证系统: 将被部署在 `localhost:8080`
 2. 2 个资源系统(为了简化, 我们使用相同的代码): 将分别被部署在 `localhost:8180` 和 `localhost:8280`
 
-![1.png](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6y3rryeg30y90ijapt.gif)
+![1.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/使用JWT和SpringBoot实现的单点登录系统/1_效果图.gif)
 
 <!-- more -->
 

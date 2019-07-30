@@ -98,10 +98,10 @@ ITEM_PIPELINES = {
 # 5. 结果
 ---
 写好后保存然后在目录下运行 `scrapy crawl movies -o data.json` 等待一会, 即可在目录下看到 `data.json` 文件如下：
-![](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6x3dg08j31ei0pwb29.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之豆瓣电影Top250/1_data.jpg)
 
 和 封面图片都被下载下来咯
-![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6x41qbpj30xk0ki11k.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之豆瓣电影Top250/2_图片.jpg)
 
 项目代码, [点我](https://github.com/kba977/Scrapy_Projects)下载。
 

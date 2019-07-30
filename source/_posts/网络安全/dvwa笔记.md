@@ -15,7 +15,7 @@ date: 2016-02-04 22:05:18
 
 危害: 攻击者可以轻松的以中间人身份捕获 cookie/session。 
 
-![](https://ws4.sinaimg.cn/large/006tNc79gy1fvo6y49op2g30y90ijapt.gif)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/dvwa笔记/1_基本的xss.gif)
 
 <!-- more -->
 
@@ -27,7 +27,7 @@ date: 2016-02-04 22:05:18
 
 危害：攻击者可以在其中嵌入自己的恶意网页
 
-![](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6y4wczyj30e507rwew.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/dvwa笔记/2_iframe_xss.jpg)
 
 
 
@@ -38,4 +38,4 @@ date: 2016-02-04 22:05:18
 ```
 
 危害：获取cookie等重要信息
-![Paste_Image.png](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6y5sttej30dw06rjs0.jpg)
+![Paste_Image.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/dvwa笔记/3_cookie_xss.jpg)

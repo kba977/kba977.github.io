@@ -8,7 +8,7 @@ categories: [Web开发]
 ## WebSocket 是什么
 阮一峰老师有过一篇博文清晰易懂地介绍了 [WebSocket](http://www.ruanyifeng.com/blog/2017/05/websocket.html)
 
-![](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6y143pzj30b404cgls.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/WebSocket简单介绍/1_logo.jpg)
 
 下面主要通过一个例子介绍 WebSocket 在 Spring中是如何使用的.
 
@@ -194,4 +194,4 @@ public class MainController {
 ### 效果展示
 如下图所示, 在我们访问 /testWebSocket 后, 会有一条消息从服务端发送到我们的前端页面
 
-![](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6y2509kj31kw0xzte4.jpg)
+![](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/WebSocket简单介绍/2_效果展示.jpg)

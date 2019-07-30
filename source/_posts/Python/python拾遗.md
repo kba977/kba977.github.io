@@ -64,12 +64,12 @@ with open('test.json') as f:
 ### 月度列表生成
    知道历史上某个时间, 比如: 2008-08, 得到目前 2011-06 之间的年号和月份的列表
 
-![1.png](https://ws2.sinaimg.cn/large/006tNc79gy1fvo7iz5iwtj30z20a4n1v.jpg)
+![1.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/python拾遗/1.jpg)
 
 ### python列表以相同的数字为一组
    例如 [0,0,0,1,1,2,2,2,3,0,4,4] --> [[0,0,0],[1,1],[2,2,2],[3],[0],[4,4]]
 
-![2.png](https://ws2.sinaimg.cn/large/006tNc79gy1fvo7izipjbj3100050jsi.jpg)
+![2.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/python拾遗/2.jpg)
 
 ### 生成随机字符串
 
@@ -92,7 +92,7 @@ for _ in range(15):
 
 ### Group by
 
-![3.png](https://ws3.sinaimg.cn/large/006tNc79gy1fvo7j0gz3oj31h60dgmzk.jpg)
+![3.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/python拾遗/3.jpg)
 
 ### 生成并校验密码
 ``` python
@@ -116,7 +116,7 @@ class User(object):
 ```
 
 效果如下图所示
-![4.png](https://ws1.sinaimg.cn/large/006tNc79gy1fvo7j0ywapj31jq0i20w6.jpg)
+![4.png](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/python拾遗/4.jpg)
 
 ### 生成分数对应的成绩
 ``` python

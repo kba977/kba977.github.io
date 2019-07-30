@@ -70,7 +70,7 @@ HTTP是一种无状态协议, 即不保留客户端和服务器的连接, 一旦
 - POST: 一般用于修改服务器上的资源, 对所发送信息的数量无限制
 
 以下是一个典型的HTTP请求
-![HTTP请求](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6xw6o0oj30li09o753.jpg)
+![HTTP请求](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Ajax学习笔记/1_HTTP请求.jpg)
 如上图所示: 第一行是请求方法和正在请求的URL, 第二行到倒数第二行为请求头部, 最后一行是请求体
 
 **一个HTTP响应包含以下`3`部分**: 
@@ -79,7 +79,7 @@ HTTP是一种无状态协议, 即不保留客户端和服务器的连接, 一旦
 3. `响应体`, 也就是响应正文
 
 以下是一个典型的HTTP应答
-![HTTP应答](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6xww7qij30j808h0t4.jpg)
+![HTTP应答](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Ajax学习笔记/2_HTTP应答.jpg)
 
 其中, 应该记住以下常用的状态码:
 - 1XX: `信息类`, 表示收到Web浏览器的请求, 正在进一步的处理中
@@ -346,12 +346,12 @@ JSON 的定义如下:
 4. 映射的集合（对象）用大括号`{}`表示
 
 用图例表示如下:
-![JSON1](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6xyqum5g30gm035jr9.gif)
+![JSON1](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Ajax学习笔记/3_JSON1.gif)
 
-![JSON2](https://ws1.sinaimg.cn/large/006tNc79gy1fvo6xz7l5ig30gm035glg.gif)
+![JSON2](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Ajax学习笔记/4_JSON2.gif)
 
 其中 Value 格式定义如下: 
-![Value](https://ws2.sinaimg.cn/large/006tNc79gy1fvo6xzosdfg30gm07qq2x.gif)
+![Value](https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Ajax学习笔记/5_Value.gif)
 
 **JSON解析**
 - `eval`和`JSON.parse`
@@ -360,12 +360,9 @@ JSON 的定义如下:
 **JSON校验工具**
 [JSONLint在线JSON校验工具](http://jsonlint.com/)
 使用截图:
-{% img http://ww2.sinaimg.cn/large/5e515a93gw1f1avj0ay60j21he0wiwie.jpg error %}
+{% img https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Ajax学习笔记/6_error.jpg error %}
 
-{% img http://ww4.sinaimg.cn/large/5e515a93gw1f1avk620ifj21gy0tcwgp.jpg success %}
-
-<!-- ![error](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6y08e7yj31he0wiwie.jpg)
-![success](https://ws3.sinaimg.cn/large/006tNc79gy1fvo6y0oxxlj31gy0tcwgp.jpg) -->
+{% img https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Ajax学习笔记/7_success.jpg success %}
 
 # 4. jQuery中的Ajax
 ## 4.1 jQuery中的Ajax
