@@ -84,7 +84,7 @@ live2d:
     show: true
 
 
-# Deployment
+# Deployment Deploy
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
