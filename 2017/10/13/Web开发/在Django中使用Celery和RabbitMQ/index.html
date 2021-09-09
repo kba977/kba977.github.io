@@ -1,0 +1,1071 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Django,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="原文链接: How to Use Celery and RabbitMQ with Django">
+<meta name="keywords" content="Django">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Django中使用Celery和RabbitMQ">
+<meta property="og:url" content="http://kba977.github.io/2017/10/13/Web开发/在Django中使用Celery和RabbitMQ/index.html">
+<meta property="og:site_name" content="kba977の空想庭院">
+<meta property="og:description" content="原文链接: How to Use Celery and RabbitMQ with Django">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/1_logo.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/2_启动.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/3_表单1.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/4_Celery运行.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/5_页面立即响应.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/6_Celery工作进程.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/7_结果.jpg">
+<meta property="og:updated_time" content="2021-09-09T03:28:45.377Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在Django中使用Celery和RabbitMQ">
+<meta name="twitter:description" content="原文链接: How to Use Celery and RabbitMQ with Django">
+<meta name="twitter:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/1_logo.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '5250582',
+      author: '管理员'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kba977.github.io/2017/10/13/Web开发/在Django中使用Celery和RabbitMQ/">
+
+
+
+
+
+  <title> 在Django中使用Celery和RabbitMQ | kba977の空想庭院 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+      <div class="site-meta-headline">
+        <a>
+          <img class="custom-logo-image" src="/images/profile.jpg" alt="kba977の空想庭院">
+        </a>
+      </div>
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">kba977の空想庭院</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'QmHEhWuDFZMPxZ1LcfFx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kba977.github.io/2017/10/13/Web开发/在Django中使用Celery和RabbitMQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kba977">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kba977の空想庭院">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                在Django中使用Celery和RabbitMQ
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-13T16:44:57+08:00">
+                2017-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Web开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/13/Web开发/在Django中使用Celery和RabbitMQ/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/10/13/Web开发/在Django中使用Celery和RabbitMQ/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/13/Web开发/在Django中使用Celery和RabbitMQ/" class="leancloud_visitors" data-flag-title="在Django中使用Celery和RabbitMQ">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文链接: <a href="https://simpleisbetterthancomplex.com/tutorial/2017/08/20/how-to-use-celery-with-django.html#celery-basic-setup" target="_blank" rel="noopener">How to Use Celery and RabbitMQ with Django</a></p>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/1_logo.jpg" alt="1.png"></p>
+<a id="more"></a>
+<p>Celery 是一个基于第三方消息服务的分布式任务调度模块. 本文将介绍如何安装并使用 Celery + RabbitMQ 在 Django 应用中执行异步任务.</p>
+<p>使用 Celery, 我们还需要安装 RabbitMQ, 因为 Celery 需要一个解决方案来传递任务. 该解决方案称为<strong>消息代理(message brokers)</strong>. 如今, Celery 支持 RabbitMQ, Redis, 和 Amazon SQS 作为消息代理.</p>
+<hr>
+<h1 id="我们为什么要使用-Celery"><a href="#我们为什么要使用-Celery" class="headerlink" title="我们为什么要使用 Celery ?"></a>我们为什么要使用 Celery ?</h1><p>Web 应用都是请求/响应模型. 当用户在浏览器中输入一个特定的URL, 发送到服务器一个 <strong>请求(request)</strong>. Django 应用收到该请求并做一些响应. 通常, 该响应是执行一段SQL, 从数据库取出数据. 当 Django 在处理该请求的时候, 用户必须等待. 当 Django 处理完成后, 它出发出一个<strong>响应</strong>给用户, 这样用户就能看到最终的执行结果.</p>
+<p>理想情况下, 请求和响应都应该特别快, 否则可能为因为用户等待太长时间而失去用户. 甚至更糟的是, 我们的 Web 服务仅仅能同时服务一部分人. 所以, 如果该过程很慢的话, 那将对我们有很大的损失.</p>
+<p>在过去, 我们的解决方案可能是使用缓存, 优化数据库查询等. 但是, 仍然有一些问题没有得到解决: 这些耗时的工作还必须去做. 一个报告的页面, 大数据展现, 视频/图片 等进程都是我们使用 Celery 很好的场景.</p>
+<p>我们将不会在整个项目中使用 Celery, 而仅仅是一些特定的耗时任务. 主要的思路是尽可能快的响应用户的请求, 而把耗时的任务放到后台去执行, 且一直保持服务器做好迎接新请求的准备.</p>
+<hr>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>最简单的安装 Celery 的方法是使用 pip:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install Celery</span><br></pre></td></tr></table></figure>
+<h2 id="在-Mac-上安装-RabbitMQ"><a href="#在-Mac-上安装-RabbitMQ" class="headerlink" title="在 Mac 上安装 RabbitMQ"></a>在 Mac 上安装 RabbitMQ</h2><p>然后我们需要安装 RabbitMQ (Mac, 其他平台类似)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew instal rabbitmq</span><br></pre></td></tr></table></figure>
+<p>RabbitMQ 的脚本默认安装在 <code>/usr/local/sbin</code>. 我们可以在 <code>.bash_profile</code> 或者 <code>.profile</code> 中添加:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<p>然后在文件的底部写入:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/sbin</span><br></pre></td></tr></table></figure>
+<p>重启终端, 以确保更改生效<br>然后我们可以使用下面的命令启动 RabbitMQ 服务:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-server</span><br></pre></td></tr></table></figure>
+<p> <img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/2_启动.jpg" alt="2.png"></p>
+<hr>
+<h1 id="Celery-基本配置"><a href="#Celery-基本配置" class="headerlink" title="Celery 基本配置"></a>Celery 基本配置</h1><p>首先, 我们的 Django 目录结构如下, 项目名为 <strong>mysite</strong>, 应用名为 <strong>core</strong>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysite</span><br><span class="line">   ├── core</span><br><span class="line">   │   ├── __init__.py</span><br><span class="line">   │   ├── apps.py</span><br><span class="line">   │   ├── migrations/</span><br><span class="line">   │   ├── models.py</span><br><span class="line">   │   ├── templates/</span><br><span class="line">   │   └── views.py</span><br><span class="line">   ├── mysite</span><br><span class="line">   │   ├── __init__.py</span><br><span class="line">   │   ├── settings.py</span><br><span class="line">   │   ├── urls.py</span><br><span class="line">   │   └── wsgi.py</span><br><span class="line">   ├── manage.py</span><br><span class="line">   └── requirements.txt</span><br></pre></td></tr></table></figure>
+<p>在 <strong>settings.py</strong> 文件中添加 <code>CELECY_BROKER_URL</code> 配置项</p>
+<figure class="highlight python"><figcaption><span>settings.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CELECY_BROKER_URL = <span class="string">'amqp://localhost'</span></span><br></pre></td></tr></table></figure>
+<p>在与 <strong>settings.py</strong> 和 <strong>urls.py</strong> 同级目录下, 创建新的文件, 名称为 <strong>celery.py</strong>.</p>
+<figure class="highlight python"><figcaption><span>celery.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(<span class="string">'DJANGO_SETTINGS_MODULE'</span>, <span class="string">'mysite.settings'</span>)</span><br><span class="line"></span><br><span class="line">app = Celery(<span class="string">'mysite'</span>)</span><br><span class="line">app.config_from_object(<span class="string">'django.conf:settings'</span>, namespace=<span class="string">'CELERY'</span>)</span><br><span class="line">app.autodiscover_tasks()</span><br></pre></td></tr></table></figure>
+<p>然后, 编辑项目根目录下 <strong><strong>init</strong>.py</strong>.</p>
+<figure class="highlight python"><figcaption><span>__init__.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> .celery <span class="keyword">import</span> app <span class="keyword">as</span> celery_app</span><br><span class="line"></span><br><span class="line">__all__ = [<span class="string">'celery_app'</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="这将确保-Celery-应用随着Django项目启动被成功导入"><a href="#这将确保-Celery-应用随着Django项目启动被成功导入" class="headerlink" title="这将确保 Celery 应用随着Django项目启动被成功导入."></a>这将确保 Celery 应用随着Django项目启动被成功导入.</h2><h1 id="创建第一个-Celery-任务"><a href="#创建第一个-Celery-任务" class="headerlink" title="创建第一个 Celery 任务"></a>创建第一个 Celery 任务</h1><p>在 Django的 core 应用里, 我们创建一个名为 <strong>tasks.py</strong> 的文件, 我们之前在项目根目录下创建的 Celery 应用会通过 <code>INSTALLED_APPS</code> 自动检索所有的 Django 应用以发现任务.</p>
+<p>我们创建一个 Celery 任务, 生成批量随机用户.</p>
+<figure class="highlight python"><figcaption><span>core/tasks.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> django.utils.crypto <span class="keyword">import</span> get_random_string</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> shared_task</span><br><span class="line"></span><br><span class="line"><span class="meta">@shared_task</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_random_user_accounts</span><span class="params">(total)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(total):</span><br><span class="line">        username = <span class="string">'user_&#123;&#125;'</span>.format(get_random_string(<span class="number">10</span>, string.ascii_letters))</span><br><span class="line">        email = <span class="string">'&#123;&#125;@example.com'</span>.format(username)</span><br><span class="line">        password = get_random_string(<span class="number">50</span>)</span><br><span class="line">        User.objects.create_user(username=username, email=email, password=password)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'&#123;&#125; random users created success!'</span>.format(total)</span><br></pre></td></tr></table></figure>
+<p>其中最重要的部分如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> shared_task</span><br><span class="line"></span><br><span class="line"><span class="meta">@shared_task</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">name_of_your_function</span><span class="params">(optional_param)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span>   <span class="comment"># do something heavy</span></span><br></pre></td></tr></table></figure>
+<p>然后, 创建一个表单和一个视图来处理我们的 Celery 任务.</p>
+<figure class="highlight python"><figcaption><span>forms.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="keyword">from</span> django.core.validators <span class="keyword">import</span> MinValueValidator, MaxValueValidator</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GenerateRandomUserForm</span><span class="params">(forms.Form)</span>:</span></span><br><span class="line">    total = forms.IntegerField(</span><br><span class="line">        validators=[</span><br><span class="line">            MinValueValidator(<span class="number">50</span>),</span><br><span class="line">            MaxValueValidator(<span class="number">500</span>)</span><br><span class="line">        ]</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<p>该表单要求输入一个 50 到 500 的数字, 如下图显示:</p>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/3_表单1.jpg" alt="3.png"></p>
+<p>然后我们的视图如下:</p>
+<figure class="highlight python"><figcaption><span>views.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render, redirect</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> messages</span><br><span class="line"><span class="keyword">from</span> django.views.generic.edit <span class="keyword">import</span> FormView</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .forms <span class="keyword">import</span> GenerateRandomUserForm</span><br><span class="line"><span class="keyword">from</span> .tasks <span class="keyword">import</span> create_random_user_accounts</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GenerateRandomUserView</span><span class="params">(FormView)</span>:</span></span><br><span class="line">    template_name = <span class="string">'core/generate_random_users.html'</span></span><br><span class="line">    form_class = GenerateRandomUserForm</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">form_valid</span><span class="params">(self, form)</span>:</span></span><br><span class="line">        total = form.cleaned_data.get(<span class="string">'total'</span>)</span><br><span class="line">        create_random_user_accounts.delay(total)</span><br><span class="line">        messages.success(self.request, <span class="string">'We are generating your random user! Wait a moment and refresh this page.'</span>)</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">'users_list'</span>)</span><br></pre></td></tr></table></figure>
+<p>其中最重要的部分如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">creat_random_user_accounts.delay(total)</span><br></pre></td></tr></table></figure>
+<p>我们并没有直接调用 <code>creat_random_user_accounts</code>方法, 而是调用 <code>creat_random_user_accounts.delay()</code>.<br>这样, 该方法就会被 Celery 调到后台去运行.</p>
+<h2 id="Django-将会接着处理-GenerateRandomUserView-这个视图-并立即返回响应给用户"><a href="#Django-将会接着处理-GenerateRandomUserView-这个视图-并立即返回响应给用户" class="headerlink" title="Django 将会接着处理 GenerateRandomUserView 这个视图, 并立即返回响应给用户."></a>Django 将会接着处理 <code>GenerateRandomUserView</code> 这个视图, 并立即返回响应给用户.</h2><h1 id="开启工作进程"><a href="#开启工作进程" class="headerlink" title="开启工作进程"></a>开启工作进程</h1><p>新开一个终端窗口, 运行下面的命令:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">celery -A mysite worker -l info</span><br></pre></td></tr></table></figure>
+<p>其中 <strong>mysite</strong> 为你的项目名称. 结果如下图所示:</p>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/4_Celery运行.jpg" alt="4.png"></p>
+<p>现在, 我们测试一下, 提交 500 在表单中去创建 500 个随机的用户.</p>
+<p>可以看到, 该请求立刻得到响应:</p>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/5_页面立即响应.jpg" alt="5.png"></p>
+<p>同时, 我们可以看到 Celery 的工作进程:</p>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/6_Celery工作进程.jpg" alt="6.png"></p>
+<p>然后稍等几秒钟, 我们刷新一下页面, 可以看到用户已经生成:</p>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/在Django中使用Celery和RabbitMQ/7_结果.jpg" alt="7.png"></p>
+<hr>
+<p>照例: 该案例的<a href="https://github.com/kba977/django-celery-example" target="_blank" rel="noopener">代码</a>可在Github上下载</p>
+<p>感谢阅读.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Django/" rel="tag"># Django</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/12/Web开发/部署Django应用/" rel="next" title="部署Django应用">
+                <i class="fa fa-chevron-left"></i> 部署Django应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/03/Python/python拾遗/" rel="prev" title="python拾遗">
+                python拾遗 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/profile.jpg" alt="kba977">
+          <p class="site-author-name" itemprop="name">kba977</p>
+           
+              <p class="site-description motion-element" itemprop="description">什么都略懂一点, 生活更精彩一些</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100004387297679" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook-official"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/kba977" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kba977" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1582389907" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:kba977@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://luowenhui.blog.51cto.com" title="兔兔西的Blog" target="_blank">兔兔西的Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.brucezhou.com" title="夜殇的小站" target="_blank">夜殇的小站</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.libinx.com" title="Thinking Realm" target="_blank">Thinking Realm</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#我们为什么要使用-Celery"><span class="nav-text">我们为什么要使用 Celery ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在-Mac-上安装-RabbitMQ"><span class="nav-text">在 Mac 上安装 RabbitMQ</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Celery-基本配置"><span class="nav-text">Celery 基本配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#这将确保-Celery-应用随着Django项目启动被成功导入"><span class="nav-text">这将确保 Celery 应用随着Django项目启动被成功导入.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建第一个-Celery-任务"><span class="nav-text">创建第一个 Celery 任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Django-将会接着处理-GenerateRandomUserView-这个视图-并立即返回响应给用户"><span class="nav-text">Django 将会接着处理 GenerateRandomUserView 这个视图, 并立即返回响应给用户.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开启工作进程"><span class="nav-text">开启工作进程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kba977</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://kba977-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://kba977.github.io/2017/10/13/Web开发/在Django中使用Celery和RabbitMQ/';
+          this.page.identifier = '2017/10/13/Web开发/在Django中使用Celery和RabbitMQ/';
+          this.page.title = '在Django中使用Celery和RabbitMQ';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kba977-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("V9V704cXk4rzl0xmvcaoxXj6-gzGzoHsz", "l6sfaXh824aQ75iwbUwla8ry");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

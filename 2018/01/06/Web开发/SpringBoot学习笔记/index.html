@@ -1,0 +1,1125 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,Spring,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="学习了慕课网 上有关 springboot 的知识, 为了达到不让自己忘记, 且总结知识的目的, 遂写了此篇博客总结。下面废话不多说, 让我们开始吧。  Spring Boot一、启动第一种方式  1mvn spring-boot:run clean 第二种方式  12mvn installjava -jar target/girl-0.0.1-SNAPSHOT.jar">
+<meta name="keywords" content="Java,Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot学习笔记">
+<meta property="og:url" content="http://kba977.github.io/2018/01/06/Web开发/SpringBoot学习笔记/index.html">
+<meta property="og:site_name" content="kba977の空想庭院">
+<meta property="og:description" content="学习了慕课网 上有关 springboot 的知识, 为了达到不让自己忘记, 且总结知识的目的, 遂写了此篇博客总结。下面废话不多说, 让我们开始吧。  Spring Boot一、启动第一种方式  1mvn spring-boot:run clean 第二种方式  12mvn installjava -jar target/girl-0.0.1-SNAPSHOT.jar">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-09-09T03:28:45.377Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot学习笔记">
+<meta name="twitter:description" content="学习了慕课网 上有关 springboot 的知识, 为了达到不让自己忘记, 且总结知识的目的, 遂写了此篇博客总结。下面废话不多说, 让我们开始吧。  Spring Boot一、启动第一种方式  1mvn spring-boot:run clean 第二种方式  12mvn installjava -jar target/girl-0.0.1-SNAPSHOT.jar">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '5250582',
+      author: '管理员'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kba977.github.io/2018/01/06/Web开发/SpringBoot学习笔记/">
+
+
+
+
+
+  <title> SpringBoot学习笔记 | kba977の空想庭院 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+      <div class="site-meta-headline">
+        <a>
+          <img class="custom-logo-image" src="/images/profile.jpg" alt="kba977の空想庭院">
+        </a>
+      </div>
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">kba977の空想庭院</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'QmHEhWuDFZMPxZ1LcfFx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kba977.github.io/2018/01/06/Web开发/SpringBoot学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kba977">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kba977の空想庭院">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                SpringBoot学习笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-06T21:08:24+08:00">
+                2018-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Web开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/06/Web开发/SpringBoot学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/06/Web开发/SpringBoot学习笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/01/06/Web开发/SpringBoot学习笔记/" class="leancloud_visitors" data-flag-title="SpringBoot学习笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote class="blockquote-center"><br>学习了<a href="http://www.imooc.com" target="_blank" rel="noopener">慕课网</a> 上有关 springboot 的知识, 为了达到不让自己忘记, 且总结知识的目的, 遂写了此篇博客总结。<br>下面废话不多说, 让我们开始吧。<br></blockquote>
+
+<h2 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h2><h3 id="一、启动"><a href="#一、启动" class="headerlink" title="一、启动"></a>一、启动</h3><h4 id="第一种方式"><a href="#第一种方式" class="headerlink" title="第一种方式"></a>第一种方式</h4>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn spring-boot:run clean</span><br></pre></td></tr></table></figure>
+<h4 id="第二种方式"><a href="#第二种方式" class="headerlink" title="第二种方式"></a>第二种方式</h4>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mvn install</span><br><span class="line">java -jar target/girl-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="二、配置"><a href="#二、配置" class="headerlink" title="二、配置"></a>二、配置</h3><h4 id="第一种方式-1"><a href="#第一种方式-1" class="headerlink" title="第一种方式"></a>第一种方式</h4><p>  在配置文件 <code>application.yml</code> 中添加变量 <code>cupSize: B</code><br>  java 中通过 <code>@Value</code> 注解获取自定义变量的值, 例子如下：</p>
+<ul>
+<li><p><code>application.yml</code></p>
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cupSize:</span> <span class="string">B</span></span><br><span class="line"><span class="attr">age:</span> <span class="number">18</span></span><br><span class="line"><span class="attr">content:</span> <span class="string">"cupSize: $&#123;cupSize&#125;, age: $&#123;age&#125;"</span>      <span class="comment"># 配置中使用当前配置量</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>HelloController.java</code></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;cupSize&#125;"</span>)</span><br><span class="line"><span class="keyword">private</span> String cupSize;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;age&#125;"</span>)</span><br><span class="line"><span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;content&#125;"</span>)</span><br><span class="line"><span class="keyword">private</span> String content;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="第二种方式-1"><a href="#第二种方式-1" class="headerlink" title="第二种方式"></a>第二种方式</h4><p>  ​ 当变量很多的时候，可以安置一个前缀，具体如下</p>
+<ul>
+<li><p><code>application.yml</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">girl:</span></span><br><span class="line"><span class="attr">  cupSize:</span> <span class="string">B</span></span><br><span class="line"><span class="attr">  age:</span> <span class="number">18</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>GirlProperties.java</code></p>
+<p>通过 <code>@Component</code> 和 <code>@ConfigurationProperties</code> 两个注解完成</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"girl"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GirlProperties</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String cupSize;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// getter and setter</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>HelloController.java</code> </p>
+<p>通过 <code>@Autowired</code> 注解来注入 <code>GirlProperties</code> 属性值 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> GirlProperties girlProperties;</span><br><span class="line"></span><br><span class="line"><span class="meta">@GetMapping</span>(value = <span class="string">"/hello"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> girlProperties.getCupSize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="多环境配置"><a href="#多环境配置" class="headerlink" title="多环境配置"></a>多环境配置</h4><p>  <code>application.yml</code>,  <code>application-dev.yml</code>,  <code>application-prod.yml</code> 分别是主配置文件, 开发配置文件和生产配置文件, 通过 <code>主配置文件</code> 可以觉得程序运行时使用哪个配置文件</p>
+<p>  指定配置启动</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar target/girl-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>application.yml</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span></span><br><span class="line"><span class="attr">    active:</span> <span class="string">dev</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>application-dev.yml</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8081</span></span><br><span class="line"><span class="attr">  context-path:</span> <span class="string">/girl</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">girl:</span></span><br><span class="line"><span class="attr">  cupSize:</span> <span class="string">F</span></span><br><span class="line"><span class="attr">  age:</span> <span class="number">18</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>application-prod.yml</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8080</span></span><br><span class="line"><span class="attr">  context-path:</span> <span class="string">/girl</span></span><br><span class="line"></span><br><span class="line"><span class="attr">girl:</span></span><br><span class="line"><span class="attr">  cupSize:</span> <span class="string">B</span></span><br><span class="line"><span class="attr">  age:</span> <span class="number">18</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="三、Controller-的使用"><a href="#三、Controller-的使用" class="headerlink" title="三、Controller 的使用"></a>三、Controller 的使用</h3><p>ps: 在做 <code>put</code> 操作时，RequstBody 格式必须为 <code>x-www-form-urlencoded</code> 而不能为 <code>form-data</code> 或者其他。    </p>
+<table>
+<thead>
+<tr>
+<th><strong>@PathVariable</strong></th>
+<th><strong>获取Url中的数据</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>@RequestParam</strong></td>
+<td><strong>获取请求参数的值</strong></td>
+</tr>
+<tr>
+<td><strong>@GetMapping</strong></td>
+<td><strong>组合注解</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>PathVariable</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Url: eg: http://localhost:8080/girl/say/17</span></span><br><span class="line"><span class="meta">@GetMapping</span>(value = <span class="string">"/say/&#123;id&#125;"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">say</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Integer Id) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> girlProperties.getCupSize() + <span class="string">" Id:"</span> + Id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>RequestParam</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Url: eg: http://localhost:8080/girl/say?id=17</span></span><br><span class="line"><span class="meta">@GetMapping</span>(value = <span class="string">"/say"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">say</span><span class="params">(@RequestParam(value = <span class="string">"id"</span>, required = <span class="keyword">false</span>, defaultValue = <span class="string">"0"</span>)</span> Integer id) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> girlProperties.getCupSize() + <span class="string">" Id:"</span> + id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="四、事务"><a href="#四、事务" class="headerlink" title="四、事务"></a>四、事务</h3><p>使用 <code>@Transactional</code> 可以为数据库操作加上事务， 示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.transaction.annotation.Transactional;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertTwo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Girl girlA = <span class="keyword">new</span> Girl();</span><br><span class="line">    girlA.setCupSize(<span class="string">"A"</span>);</span><br><span class="line">    girlA.setAge(<span class="number">18</span>);</span><br><span class="line">    girlRepository.save(girlA);</span><br><span class="line"></span><br><span class="line">    Girl girlB = <span class="keyword">new</span> Girl();</span><br><span class="line">    girlB.setCupSize(<span class="string">"B"</span>);</span><br><span class="line">    girlB.setAge(<span class="number">19</span>);</span><br><span class="line">    girlRepository.save(girlB);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="五、表单验证"><a href="#五、表单验证" class="headerlink" title="五、表单验证"></a>五、表单验证</h3><ol>
+<li><p>首先在对象属性上加上注解，例如：最小值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Min</span>(value = <span class="number">18</span>, message = <span class="string">"未成年少女禁止入内"</span>)</span><br><span class="line"><span class="keyword">private</span> Integer age;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在控制层函数参数中加入 <code>@Valid</code> 注解。如果表单验证未通过，那么错误信息会在 <code>bindingResult</code> 这个对象中，示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/girls"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Girl <span class="title">girlAdd</span><span class="params">(@Valid Girl girl, BindingResult bindingResult)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (bindingResult.hasErrors()) &#123;</span><br><span class="line">        System.out.println(bindingResult.getFieldError().getDefaultMessage());</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    girl.setCupSize(girl.getCupSize());</span><br><span class="line">    girl.setAge(girl.getAge());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> girlRepository.save(girl);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当新增少女年龄在18岁以下时，在控制台会输出 <code>未成年少女禁止入内</code>， 并创建失败。</p>
+</li>
+</ol>
+<h3 id="六、使用-AOP-统一处理请求日志"><a href="#六、使用-AOP-统一处理请求日志" class="headerlink" title="六、使用 AOP 统一处理请求日志"></a>六、使用 AOP 统一处理请求日志</h3><ul>
+<li><p>添加依赖 <code>pom.xml</code></p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>@Before</code> </p>
+<p>方法到来前拦截，其中<code>&quot;execution(public * com.kba977.girl.controller.GirlController.*(..))&quot;</code> 的 <code>.*(..)</code> 表示 <code>GirlController</code> 类下不论什么方法，不论什么参数，全都拦截</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kba977.girl.aspect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Before;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span>(<span class="string">"execution(public * com.kba977.girl.controller.GirlController.*(..))"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="number">1111111</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>@After</code></p>
+<p>和 <code>@Before</code>正好相反，在方法执行之后，开始执行。</p>
+</li>
+<li><p><code>@Pointcut</code> </p>
+<p>通过该注解，可以减少重复代码，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Pointcut</span>(<span class="string">"execution(public * com.kba977.girl.controller.GirlController.*(..))"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span>(<span class="string">"log()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doBefore</span><span class="params">(JoinPoint joinPoint)</span> </span>&#123;</span><br><span class="line">        log.info(<span class="string">"222222222222"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@After</span>(<span class="string">"log()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAfter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        log.info(<span class="string">"222222222222"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>@AfterReturning</code></p>
+<p>获取请求之后返回的信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AfterReturning</span>(returning = <span class="string">"object"</span>, pointcut = <span class="string">"log()"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAfterReturning</span><span class="params">(Object object)</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"response = &#123;&#125;"</span>, object);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取请求信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Before</span>(<span class="string">"log()"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doBefore</span><span class="params">(JoinPoint joinPoint)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span><br><span class="line">    HttpServletRequest request = attributes.getRequest();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// url</span></span><br><span class="line">    log.info(<span class="string">"url = &#123;&#125;"</span>, request.getRequestURL());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// method</span></span><br><span class="line">    log.info(<span class="string">"method = &#123;&#125;"</span>, request.getMethod());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ip</span></span><br><span class="line">    log.info(<span class="string">"ip = &#123;&#125;"</span>, request.getRemoteAddr());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 类方法</span></span><br><span class="line">    log.info(<span class="string">"class_method = &#123;&#125;"</span>, joinPoint.getSignature().getDeclaringTypeName() + <span class="string">"."</span> + joinPoint.getSignature().getName());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 参数</span></span><br><span class="line">    log.info(<span class="string">"args = &#123;&#125;"</span>, joinPoint.getArgs());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="七、统一异常处理"><a href="#七、统一异常处理" class="headerlink" title="七、统一异常处理"></a>七、统一异常处理</h3><p>​  例如： 获取某女生的年龄并判断<br>​  小于10，返回 “应该还在上小学”<br>​  大于10且小于16，返回 “可能在上初中”</p>
+<p>​  返回格式的统一<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 请求失败时</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"code"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">"msg"</span>: <span class="string">"金额必传"</span>,</span><br><span class="line">    <span class="attr">"data"</span>: <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 请求成功时</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"code"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">"msg"</span>: <span class="string">"成功"</span>, </span><br><span class="line">    <span class="attr">"data"</span>: &#123;</span><br><span class="line">        <span class="attr">"id"</span>: <span class="number">20</span>, </span><br><span class="line">        <span class="attr">"cupSize"</span>: <span class="string">"B"</span>,</span><br><span class="line">        <span class="attr">"age"</span>: <span class="number">25</span>,</span><br><span class="line">        <span class="attr">"money"</span>: <span class="number">1.2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Result 类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * http 请求返回的最外层对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Result</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/** 错误码 **/</span></span><br><span class="line">    <span class="keyword">private</span> Integer code;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 提示信息 **/</span></span><br><span class="line">    <span class="keyword">private</span> String msg;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 具体内容 **/</span></span><br><span class="line">    <span class="keyword">private</span> T data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/girls"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;Girl&gt; <span class="title">girlAdd</span><span class="params">(@Valid Girl girl, BindingResult bindingResult)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (bindingResult.hasErrors()) &#123;</span><br><span class="line"></span><br><span class="line">        Result result = <span class="keyword">new</span> Result();</span><br><span class="line">        result.setCode(<span class="number">1</span>);</span><br><span class="line">        result.setMsg(bindingResult.getFieldError().getDefaultMessage());</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    girl.setCupSize(girl.getCupSize());</span><br><span class="line">    girl.setAge(girl.getAge());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Result result = <span class="keyword">new</span> Result();</span><br><span class="line">    result.setCode(<span class="number">0</span>);</span><br><span class="line">    result.setMsg(<span class="string">"成功"</span>);</span><br><span class="line">    result.setData(girlRepository.save(girl));</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/girls"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;Girl&gt; <span class="title">girlAdd</span><span class="params">(@Valid Girl girl, BindingResult bindingResult)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (bindingResult.hasErrors()) &#123;</span><br><span class="line">        <span class="keyword">return</span> ResultUtil.error(<span class="number">1</span>, bindingResult.getFieldError().getDefaultMessage())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    girl.setCupSize(girl.getCupSize());</span><br><span class="line">    girl.setAge(girl.getAge());</span><br><span class="line">    <span class="keyword">return</span> ResultUtil.success(girlRepository.save(girl));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h4>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExceptionHandle</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(value = Exception.class)</span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Result <span class="title">handle</span><span class="params">(Exception e)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ResultUtil.error(<span class="number">100</span>, e.getMessage());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h4><p>  解决啦上述捕获异常时，code 单一的问题</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ResultEnum &#123;</span><br><span class="line"></span><br><span class="line">    UNKNOWN_ERROR(-<span class="number">1</span>, <span class="string">"未知错误"</span>),</span><br><span class="line">    SUCCESS(<span class="number">0</span>, <span class="string">"成功"</span>),</span><br><span class="line">    PRIMARY_SCHOOL(<span class="number">100</span>, <span class="string">"你可能还在上小学吧"</span>),</span><br><span class="line">    MIDDLE_SCHOOL(<span class="number">101</span>, <span class="string">"你可能还在上初中吧"</span>),</span><br><span class="line">    ;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer code;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String msg;</span><br><span class="line"></span><br><span class="line">    ResultEnum(Integer code, String msg) &#123;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">        <span class="keyword">this</span>.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GirlException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer code;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GirlException</span><span class="params">(ResultEnum resultEnum)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(resultEnum.getMsg());</span><br><span class="line">        <span class="keyword">this</span>.code = resultEnum.getCode();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExceptionHandle</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(value = Exception.class)</span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Result <span class="title">handle</span><span class="params">(Exception e)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (e <span class="keyword">instanceof</span> GirlException) &#123;</span><br><span class="line">            GirlException girlException = (GirlException) e;</span><br><span class="line">            <span class="keyword">return</span> ResultUtil.error(girlException.getCode(), girlException.getMessage());</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            log.error(<span class="string">"【系统异常】&#123;&#125;"</span>, e);</span><br><span class="line">            <span class="keyword">return</span> ResultUtil.error(-<span class="number">1</span>, <span class="string">"未知错误"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getAge</span><span class="params">(Integer id)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Girl girl = girlRepository.findOne(id);</span><br><span class="line">    Integer age = girl.getAge();</span><br><span class="line">    <span class="keyword">if</span> (age &lt; <span class="number">8</span>) &#123;</span><br><span class="line">        <span class="comment">// 返回 "你可能还在上小学吧" code = 100</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> GirlException(ResultEnum.PRIMARY_SCHOOL);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (age &gt; <span class="number">8</span> &amp;&amp; age &lt; <span class="number">18</span>) &#123;</span><br><span class="line">        <span class="comment">// 返回 "你可能还在上初中吧" code = 101</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> GirlException(ResultEnum.MIDDLE_SCHOOL);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 加钱</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="八、单元测试"><a href="#八、单元测试" class="headerlink" title="八、单元测试"></a>八、单元测试</h3><h4 id="测试-Service"><a href="#测试-Service" class="headerlink" title="测试 Service"></a>测试 Service</h4>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GirlServiceTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> GirlService girlService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">findOne</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Girl girl = girlService.findOne(<span class="number">1</span>);</span><br><span class="line"><span class="comment">//        assertNotNull(girl);</span></span><br><span class="line">        assertEquals(girl.getAge(), <span class="keyword">new</span> Integer(<span class="number">18</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="测试-API"><a href="#测试-API" class="headerlink" title="测试 API"></a>测试 API</h4>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="meta">@AutoConfigureMockMvc</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GirlControllerTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MockMvc mvc;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">girlList</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        mvc.perform(MockMvcRequestBuilders.get(<span class="string">"/girls"</span>))</span><br><span class="line">                .andExpect(MockMvcResultMatchers.status().isOk());</span><br><span class="line"><span class="comment">//                .andExpect(MockMvcResultMatchers.content().string("abc"));</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>  <code>mvn clean package -Dmaven.test.skip=true</code> maven 打包的时候跳过单元测试</p>
+<h3 id="XXX、其他工具类"><a href="#XXX、其他工具类" class="headerlink" title="XXX、其他工具类"></a>XXX、其他工具类</h3><h4 id="ResultUtil"><a href="#ResultUtil" class="headerlink" title="ResultUtil"></a>ResultUtil</h4>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResultUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Result <span class="title">success</span><span class="params">(Object object)</span> </span>&#123;</span><br><span class="line">        Result result = <span class="keyword">new</span> Result();</span><br><span class="line">        result.setCode(<span class="number">0</span>);</span><br><span class="line">        result.setMsg(<span class="string">"成功"</span>);</span><br><span class="line">        result.setData(object);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Result <span class="title">success</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> success(<span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Result <span class="title">error</span><span class="params">(Integer code, String msg)</span> </span>&#123;</span><br><span class="line">        Result result = <span class="keyword">new</span> Result();</span><br><span class="line">        result.setCode(code);</span><br><span class="line">        result.setMsg(msg);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/28/Web开发/WebSocket简单介绍/" rel="next" title="WebSocket简单介绍">
+                <i class="fa fa-chevron-left"></i> WebSocket简单介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/14/Web开发/Java解析XML到POJO/" rel="prev" title="Java解析XML到POJO">
+                Java解析XML到POJO <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/profile.jpg" alt="kba977">
+          <p class="site-author-name" itemprop="name">kba977</p>
+           
+              <p class="site-description motion-element" itemprop="description">什么都略懂一点, 生活更精彩一些</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100004387297679" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook-official"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/kba977" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kba977" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1582389907" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:kba977@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://luowenhui.blog.51cto.com" title="兔兔西的Blog" target="_blank">兔兔西的Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.brucezhou.com" title="夜殇的小站" target="_blank">夜殇的小站</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.libinx.com" title="Thinking Realm" target="_blank">Thinking Realm</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Boot"><span class="nav-text">Spring Boot</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、启动"><span class="nav-text">一、启动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一种方式"><span class="nav-text">第一种方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二种方式"><span class="nav-text">第二种方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、配置"><span class="nav-text">二、配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一种方式-1"><span class="nav-text">第一种方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二种方式-1"><span class="nav-text">第二种方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多环境配置"><span class="nav-text">多环境配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、Controller-的使用"><span class="nav-text">三、Controller 的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、事务"><span class="nav-text">四、事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、表单验证"><span class="nav-text">五、表单验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、使用-AOP-统一处理请求日志"><span class="nav-text">六、使用 AOP 统一处理请求日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、统一异常处理"><span class="nav-text">七、统一异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#捕获异常"><span class="nav-text">捕获异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义异常"><span class="nav-text">自定义异常</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#八、单元测试"><span class="nav-text">八、单元测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#测试-Service"><span class="nav-text">测试 Service</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试-API"><span class="nav-text">测试 API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XXX、其他工具类"><span class="nav-text">XXX、其他工具类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ResultUtil"><span class="nav-text">ResultUtil</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kba977</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://kba977-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://kba977.github.io/2018/01/06/Web开发/SpringBoot学习笔记/';
+          this.page.identifier = '2018/01/06/Web开发/SpringBoot学习笔记/';
+          this.page.title = 'SpringBoot学习笔记';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kba977-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("V9V704cXk4rzl0xmvcaoxXj6-gzGzoHsz", "l6sfaXh824aQ75iwbUwla8ry");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

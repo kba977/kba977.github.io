@@ -1,0 +1,1093 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,Spring,GraphQL,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="GraphQL是一种查询语言用来设计 APIs，可替代 REST，SOAP 或 gRPC，详细的可以查看官网解释: GraphQL 本教程中，我们将构建一个 Spring Boot GraphQL 例子并提供 CRUD APIs 来从 mysql 数据库中创建，查询，更新，删除对象。">
+<meta name="keywords" content="Java,Spring,GraphQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot + GraphQL + Mysql 实现 CRUD">
+<meta property="og:url" content="http://kba977.github.io/2020/04/25/Web开发/SpringBoot_GraphQL_MySQL实现CRUD/index.html">
+<meta property="og:site_name" content="kba977の空想庭院">
+<meta property="og:description" content="GraphQL是一种查询语言用来设计 APIs，可替代 REST，SOAP 或 gRPC，详细的可以查看官网解释: GraphQL 本教程中，我们将构建一个 Spring Boot GraphQL 例子并提供 CRUD APIs 来从 mysql 数据库中创建，查询，更新，删除对象。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/SpringBoot_GraphQL_MySQL实现CRUD/封面图.png">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/SpringBoot_GraphQL_MySQL实现CRUD/工程目录结构.png">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/SpringBoot_GraphQL_MySQL实现CRUD/运行结果.png">
+<meta property="og:updated_time" content="2021-09-09T03:28:45.376Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot + GraphQL + Mysql 实现 CRUD">
+<meta name="twitter:description" content="GraphQL是一种查询语言用来设计 APIs，可替代 REST，SOAP 或 gRPC，详细的可以查看官网解释: GraphQL 本教程中，我们将构建一个 Spring Boot GraphQL 例子并提供 CRUD APIs 来从 mysql 数据库中创建，查询，更新，删除对象。">
+<meta name="twitter:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/SpringBoot_GraphQL_MySQL实现CRUD/封面图.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '5250582',
+      author: '管理员'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kba977.github.io/2020/04/25/Web开发/SpringBoot_GraphQL_MySQL实现CRUD/">
+
+
+
+
+
+  <title> SpringBoot + GraphQL + Mysql 实现 CRUD | kba977の空想庭院 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+      <div class="site-meta-headline">
+        <a>
+          <img class="custom-logo-image" src="/images/profile.jpg" alt="kba977の空想庭院">
+        </a>
+      </div>
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">kba977の空想庭院</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'QmHEhWuDFZMPxZ1LcfFx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kba977.github.io/2020/04/25/Web开发/SpringBoot_GraphQL_MySQL实现CRUD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kba977">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kba977の空想庭院">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                SpringBoot + GraphQL + Mysql 实现 CRUD
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-25T19:03:25+08:00">
+                2020-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Web开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/04/25/Web开发/SpringBoot_GraphQL_MySQL实现CRUD/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/25/Web开发/SpringBoot_GraphQL_MySQL实现CRUD/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/04/25/Web开发/SpringBoot_GraphQL_MySQL实现CRUD/" class="leancloud_visitors" data-flag-title="SpringBoot + GraphQL + Mysql 实现 CRUD">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/SpringBoot_GraphQL_MySQL实现CRUD/封面图.png" alt="spring-boot-graphql-mysql-crud-apis-feature-image"></p>
+<p>GraphQL是一种查询语言用来设计 APIs，可替代 REST，SOAP 或 gRPC，详细的可以查看官网解释: <a href="https://graphql.org/" target="_blank" rel="noopener">GraphQL</a></p>
+<p>本教程中，我们将构建一个 Spring Boot GraphQL 例子并提供 CRUD APIs 来从 mysql 数据库中创建，查询，更新，删除对象。</p>
+<a id="more"></a>
+<h2 id="Sring-Boot-CRUD-GraphQL-APIs-概览"><a href="#Sring-Boot-CRUD-GraphQL-APIs-概览" class="headerlink" title="Sring Boot CRUD GraphQL APIs 概览"></a>Sring Boot CRUD GraphQL APIs 概览</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>我们有两个数据模型：<code>作者(Author)</code> 和 <code>课程(Tutorial)</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Author &#123;</span><br><span class="line">  id: Long</span><br><span class="line">  name: String</span><br><span class="line">  age: Integer</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Tutorial &#123;</span><br><span class="line">  id: Long</span><br><span class="line">  title: String</span><br><span class="line">  description: String</span><br><span class="line">  author: Author</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一个作者可能有多个课程 , 所以他们是一对多的关系</p>
+<h3 id="CRUD-GraphQL-APIs"><a href="#CRUD-GraphQL-APIs" class="headerlink" title="CRUD GraphQL APIs"></a>CRUD GraphQL APIs</h3><ul>
+<li><p>创建作者:</p>
+<ul>
+<li><p>GraphQL</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mutation &#123;</span><br><span class="line">  createAuthor(</span><br><span class="line">    name: <span class="string">"bezkoder"</span>,</span><br><span class="line">    age: <span class="number">27</span>) &#123;</span><br><span class="line">      id </span><br><span class="line">      name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>响应</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"data"</span>: &#123;</span><br><span class="line">    <span class="attr">"createAuthor"</span>: &#123;</span><br><span class="line">      <span class="attr">"id"</span>: <span class="string">"1"</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"bezkoder"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>查询所有作者</p>
+<ul>
+<li><p>GraphQL</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">query &#123;</span><br><span class="line">  findAllAuthors&#123;</span><br><span class="line">    id</span><br><span class="line">    name</span><br><span class="line">    age</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>响应</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"data"</span>: &#123;</span><br><span class="line">    <span class="attr">"findAllAuthors"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"id"</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"张三"</span>,</span><br><span class="line">        <span class="attr">"age"</span>: <span class="number">25</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"id"</span>: <span class="number">2</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"李四"</span></span><br><span class="line">        <span class="string">"age"</span>: <span class="number">43</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>等等，这里先不一一列举了</p>
+</li>
+</ul>
+<p>如果查看数据库，你会发现有两张表: <code>author</code> 和 <code>tutorial</code></p>
+<p>内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from author;</span><br><span class="line">+----+-----+--------+</span><br><span class="line">| id | age | name   |</span><br><span class="line">+----+-----+--------+</span><br><span class="line">|  1 |  25 | 张三   |</span><br><span class="line">|  2 |  43 | 李四   |</span><br><span class="line">+----+-----+--------+</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from tutorial;</span><br><span class="line">+----+-------------------------------------+----------------+-----------+</span><br><span class="line">| id | description                         | title          | author_id |</span><br><span class="line">+----+-------------------------------------+----------------+-----------+</span><br><span class="line">|  1 | 该教程可以帮助你学习 Java              | 学习 Java       | 1         |</span><br><span class="line">|  2 | 很棒的 GraphQL 教程                  | 学习 GraphQL    | 2         |</span><br><span class="line">+----+-------------------------------------+----------------+-----------+</span><br></pre></td></tr></table></figure>
+<h2 id="开始构建APIs"><a href="#开始构建APIs" class="headerlink" title="开始构建APIs"></a>开始构建APIs</h2><h3 id="用到的依赖"><a href="#用到的依赖" class="headerlink" title="用到的依赖"></a>用到的依赖</h3><p>我们的应用将用到下面这些:</p>
+<ul>
+<li>Java8 或者 java11</li>
+<li>Spring Boot 2.2.1.RELEASE (with Spring Web)</li>
+<li>Graphql-spring-boot-starter 7.0.1</li>
+<li>Graphiql-spring-boot-starter 7.0.1</li>
+<li>Gradle 6.3</li>
+<li>MySQL 5.7</li>
+</ul>
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/SpringBoot_GraphQL_MySQL实现CRUD/工程目录结构.png" alt="image-20200426170523001"></p>
+<ul>
+<li>resources/graphql 中所有的 <code>.graphqls</code> 定义了 GraphQL schemas</li>
+<li>model: 存放 Author 和 Tutorial 实体类</li>
+<li>mapper: 存放 Mapper 接口来和 MySQL 交互</li>
+<li>resolver: 通过实现一些 <code>Resolver</code>接口来处理查询和修改的请求，该类可以理解成 SpringMVC 中的 Controller 层</li>
+<li>application.yml: 配置文件</li>
+<li>build.gradle: gradle 的构建文件</li>
+</ul>
+<h3 id="项目准备"><a href="#项目准备" class="headerlink" title="项目准备"></a>项目准备</h3><p>首先创建 Spring Boot 项目，然后添加依赖</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">  <span class="comment">// SpringBoot</span></span><br><span class="line">  implementation <span class="string">'org.springframework.boot:spring-boot-starter-web'</span></span><br><span class="line">  developmentOnly <span class="string">'org.springframework.boot:spring-boot-devtools'</span></span><br><span class="line">  testImplementation(<span class="string">'org.springframework.boot:spring-boot-starter-test'</span>) &#123;</span><br><span class="line">    exclude <span class="string">group:</span> <span class="string">'org.junit.vintage'</span>, <span class="string">module:</span> <span class="string">'junit-vintage-engine'</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Graphql</span></span><br><span class="line">  implementation <span class="string">'com.graphql-java-kickstart:graphql-spring-boot-starter:7.0.1'</span></span><br><span class="line">  implementation <span class="string">'com.graphql-java-kickstart:graphiql-spring-boot-starter:7.0.1'</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Mybatis-Plus</span></span><br><span class="line">  implementation <span class="string">'com.baomidou:mybatis-plus-boot-starter:3.1.2'</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Mysql</span></span><br><span class="line">  implementation <span class="string">'mysql:mysql-connector-java:5.1.6'</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Flyway</span></span><br><span class="line">  implementation <span class="string">'org.flywaydb:flyway-core:6.3.3'</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Lombok</span></span><br><span class="line">  compileOnly <span class="string">'org.projectlombok:lombok'</span></span><br><span class="line">  annotationProcessor <span class="string">'org.projectlombok:lombok'</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Spock</span></span><br><span class="line">  testImplementation <span class="string">'org.spockframework:spock-core:2.0-M1-groovy-2.5'</span></span><br><span class="line">  testImplementation <span class="string">'org.spockframework:spock-spring:2.0-M1-groovy-2.5'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="相关配置文件"><a href="#相关配置文件" class="headerlink" title="相关配置文件"></a>相关配置文件</h3><p>打开 application.yml 并添加下面的配置</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8083</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  flyway:</span></span><br><span class="line"><span class="attr">    locations:</span> <span class="attr">classpath:db/migration</span></span><br><span class="line"><span class="attr">    out-of-order:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    url:</span> <span class="string">$&#123;spring.datasource.url&#125;</span></span><br><span class="line"><span class="attr">    user:</span> <span class="string">$&#123;spring.datasource.username&#125;</span></span><br><span class="line"><span class="attr">    password:</span> <span class="string">$&#123;spring.datasource.password&#125;</span></span><br><span class="line"><span class="attr">  datasource:</span></span><br><span class="line"><span class="attr">    url:</span> <span class="attr">jdbc:mysql://localhost:3306/learn_graphql</span></span><br><span class="line"><span class="attr">    username:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">    password:</span></span><br><span class="line"><span class="attr">    driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line"></span><br><span class="line"><span class="attr">mybatis-plus:</span></span><br><span class="line"><span class="attr">  type-aliases-package:</span> <span class="string">com.kba977.learngraphql.mapper</span></span><br></pre></td></tr></table></figure>
+<h3 id="创建-GraphQL-Schema"><a href="#创建-GraphQL-Schema" class="headerlink" title="创建 GraphQL Schema"></a>创建 GraphQL Schema</h3><p>我们为了将schema拆分到不同的文件里，以分类管理，Spring Boot GraphQL 会自动扫描所有 schema 文件</p>
+<p>首先我们创建 Schemas</p>
+<p><code>author.graphqls</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">type Author &#123;</span><br><span class="line">    id: ID!</span><br><span class="line">    name: String!</span><br><span class="line">    age: Int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">input CreateAuthorInput &#123;</span><br><span class="line">    name: String!</span><br><span class="line">    age: Int!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>tutorial.graphqls</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">type Tutorial &#123;</span><br><span class="line">    id: ID!</span><br><span class="line">    title: String!</span><br><span class="line">    description: String</span><br><span class="line">    author: Author</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">input CreateTutorialInput &#123;</span><br><span class="line">    title: String!</span><br><span class="line">    description: String!</span><br><span class="line">    authorId: ID!</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">input UpdateTutorialInput &#123;</span><br><span class="line">    title: String</span><br><span class="line">    description: String</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>query.graphqls</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># Root</span><br><span class="line">type Query &#123;</span><br><span class="line">    # Author</span><br><span class="line">    findAllAuthors: [Author]!</span><br><span class="line">    findAuthorById(id: ID!): Author</span><br><span class="line">    countAuthors: Int!</span><br><span class="line"></span><br><span class="line">    # Tutorial</span><br><span class="line">    findAllTutorials: [Tutorial]!</span><br><span class="line">    findTutorialById(id: ID!): Tutorial</span><br><span class="line">    countTutorials: Int!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>mutation.graphqls</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Root</span><br><span class="line">type Mutation &#123;</span><br><span class="line">    # Author</span><br><span class="line">    createAuthor(createAuthorInput: CreateAuthorInput!): Author!</span><br><span class="line"></span><br><span class="line">    # Tutorial</span><br><span class="line">    createTutorial(createTutorialInput: CreateTutorialInput!): Tutorial!</span><br><span class="line">    updateTutorial(id: ID!, updateTutorialInput: UpdateTutorialInput): Tutorial!</span><br><span class="line">    deleteTutorial(id: ID!): Boolean</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 GraphQL 中分为两个大类，所有的查询入口在 <code>Query</code>, 所有的变更入口都在 <code>Mutation</code></p>
+<p>上面文件中 <code>!</code> 的意思该字段不能为 <code>null</code>，如果加 <code>!</code> ，那么在返回值的时候 GraphQL允许返回 null</p>
+<h3 id="定义实体类，Mapper接口，Service实现"><a href="#定义实体类，Mapper接口，Service实现" class="headerlink" title="定义实体类，Mapper接口，Service实现"></a>定义实体类，Mapper接口，Service实现</h3><p>这些我们比较熟悉，直接跳过大家可以查看源码</p>
+<h3 id="实现GraphQL-Root-解析器"><a href="#实现GraphQL-Root-解析器" class="headerlink" title="实现GraphQL Root 解析器"></a>实现GraphQL Root 解析器</h3><p>如下面文件 <code>TutorialMutationResolver</code> 实现了对 <code>Tutorial</code> 的变更请求处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kba977.learngraphql.graphql.resolver.mutation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.kba977.learngraphql.graphql.type.tutorial.CreateTutorialInput;</span><br><span class="line"><span class="keyword">import</span> com.kba977.learngraphql.graphql.type.tutorial.UpdateTutorialInput;</span><br><span class="line"><span class="keyword">import</span> com.kba977.learngraphql.model.Tutorial;</span><br><span class="line"><span class="keyword">import</span> com.kba977.learngraphql.service.TutorialService;</span><br><span class="line"><span class="keyword">import</span> graphql.kickstart.tools.GraphQLMutationResolver;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.javassist.NotFoundException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.BeanUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Optional;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TutorialMutationResolver</span> <span class="keyword">implements</span> <span class="title">GraphQLMutationResolver</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TutorialService tutorialService;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Tutorial <span class="title">createTutorial</span><span class="params">(CreateTutorialInput input)</span> </span>&#123;</span><br><span class="line">        Tutorial tutorial = <span class="keyword">new</span> Tutorial(input.getTitle(), input.getDescription(), input.getAuthorId());</span><br><span class="line">        tutorialService.save(tutorial);</span><br><span class="line">        <span class="keyword">return</span> tutorial;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Tutorial <span class="title">updateTutorial</span><span class="params">(Integer id, UpdateTutorialInput input)</span> <span class="keyword">throws</span> NotFoundException </span>&#123;</span><br><span class="line">        Optional&lt;Tutorial&gt; optTutorial = Optional.ofNullable(tutorialService.getById(id));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (optTutorial.isPresent()) &#123;</span><br><span class="line">            Tutorial tutorial = optTutorial.get();</span><br><span class="line">            BeanUtils.copyProperties(input, tutorial);</span><br><span class="line">            tutorialService.updateById(tutorial);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> tutorialService.getById(id);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NotFoundException(<span class="string">"Not found Tutorial to update!"</span>);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">deleteTutorial</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> tutorialService.removeById(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实现-GraphQL-字段解析器"><a href="#实现-GraphQL-字段解析器" class="headerlink" title="实现 GraphQL 字段解析器"></a>实现 GraphQL 字段解析器</h3><p>对于 Tutorial 中的复杂类型 author，我们需要字段解析器去解析它的值，<code>TutorialResolver</code> 实现了 <code>GraphQLResolver</code> 接口并实现 <code>getAuthor()</code> 方法</p>
+<p><code>resolver/TutorialResolver.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kba977.learngraphql.graphql.resolver;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.kba977.learngraphql.model.Author;</span><br><span class="line"><span class="keyword">import</span> com.kba977.learngraphql.model.Tutorial;</span><br><span class="line"><span class="keyword">import</span> com.kba977.learngraphql.service.AuthorService;</span><br><span class="line"><span class="keyword">import</span> graphql.kickstart.tools.GraphQLResolver;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Optional;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TutorialResolver</span> <span class="keyword">implements</span> <span class="title">GraphQLResolver</span>&lt;<span class="title">Tutorial</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AuthorService authorService;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Author <span class="title">getAuthor</span><span class="params">(Tutorial tutorial)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> authorService.getById(tutorial.getAuthorId());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果客户端请求 <code>Tutorial</code> 没有带上 <code>author</code> 字段，那么 GraphQL Server 将不会调用该方法去解析字段</p>
+<h3 id="运行应用并检查结果"><a href="#运行应用并检查结果" class="headerlink" title="运行应用并检查结果"></a>运行应用并检查结果</h3><p>应用启动后，打开浏览器访问 <code>localhost:8083/graphiql</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">fragment author on Author &#123;</span><br><span class="line">  id</span><br><span class="line">  name</span><br><span class="line">  age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">query findAllAuthors &#123;</span><br><span class="line">  findAllAuthors &#123;</span><br><span class="line">    ...author</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">query findAuthorById &#123;</span><br><span class="line">  findAuthorById(id: 3) &#123;</span><br><span class="line">    ...author</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">query countAuthors &#123;</span><br><span class="line">  countAuthors </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fragment tutorial on Tutorial &#123;</span><br><span class="line">  id</span><br><span class="line">  title</span><br><span class="line">  description</span><br><span class="line">  author &#123;</span><br><span class="line">    ...author</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">query findAllTutorials &#123;</span><br><span class="line">  findAllTutorials &#123;</span><br><span class="line">    ...tutorial</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">query countTutorials &#123;</span><br><span class="line">  countTutorials </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mutation createAuthor &#123;</span><br><span class="line">  createAuthor(createAuthorInput: &#123;</span><br><span class="line">    name: &quot;kba999&quot;</span><br><span class="line">    age: 20 &#125;) </span><br><span class="line">  &#123;</span><br><span class="line">    ...author</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mutation createTutorial &#123;</span><br><span class="line">  createTutorial(createTutorialInput: &#123;</span><br><span class="line">    title: &quot;新概念英语&quot;</span><br><span class="line">    description: &quot;学习英语的好资料&quot;</span><br><span class="line">    authorId: 2</span><br><span class="line">  &#125;) &#123;</span><br><span class="line">    ...tutorial</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mutation updateTutorial &#123;</span><br><span class="line">  updateTutorial(id: 4, updateTutorialInput: &#123;</span><br><span class="line">    title: &quot;我们的世界&quot;</span><br><span class="line">  &#125;) &#123;</span><br><span class="line">    ...tutorial</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mutation deleteTutorial &#123;</span><br><span class="line">  deleteTutorial(id: 1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/SpringBoot_GraphQL_MySQL实现CRUD/运行结果.png" alt="image-20200426185338528"></p>
+<h3 id="进一步学习资源"><a href="#进一步学习资源" class="headerlink" title="进一步学习资源"></a>进一步学习资源</h3><ul>
+<li><a href="https://graphql.org/learn/" target="_blank" rel="noopener">GraphQL documentation</a></li>
+<li><a href="https://www.graphql-java.com/tutorials/getting-started-with-spring-boot/" target="_blank" rel="noopener">https://www.graphql-java.com/tutorials/getting-started-with-spring-boot/</a></li>
+<li><a href="https://github.com/graphql-java/graphql-java" target="_blank" rel="noopener">graphql-java Github</a></li>
+</ul>
+<h3 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h3><p>你可以从github上找到完整的代码：<a href="https://github.com/kba977/learn-graphql" target="_blank" rel="noopener">https://github.com/kba977/learn-graphql</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+            <a href="/tags/GraphQL/" rel="tag"># GraphQL</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/14/Web开发/Java解析XML到POJO/" rel="next" title="Java解析XML到POJO">
+                <i class="fa fa-chevron-left"></i> Java解析XML到POJO
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/profile.jpg" alt="kba977">
+          <p class="site-author-name" itemprop="name">kba977</p>
+           
+              <p class="site-description motion-element" itemprop="description">什么都略懂一点, 生活更精彩一些</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100004387297679" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook-official"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/kba977" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kba977" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1582389907" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:kba977@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://luowenhui.blog.51cto.com" title="兔兔西的Blog" target="_blank">兔兔西的Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.brucezhou.com" title="夜殇的小站" target="_blank">夜殇的小站</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.libinx.com" title="Thinking Realm" target="_blank">Thinking Realm</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sring-Boot-CRUD-GraphQL-APIs-概览"><span class="nav-text">Sring Boot CRUD GraphQL APIs 概览</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#目标"><span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CRUD-GraphQL-APIs"><span class="nav-text">CRUD GraphQL APIs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始构建APIs"><span class="nav-text">开始构建APIs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用到的依赖"><span class="nav-text">用到的依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目结构"><span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目准备"><span class="nav-text">项目准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关配置文件"><span class="nav-text">相关配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-GraphQL-Schema"><span class="nav-text">创建 GraphQL Schema</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义实体类，Mapper接口，Service实现"><span class="nav-text">定义实体类，Mapper接口，Service实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现GraphQL-Root-解析器"><span class="nav-text">实现GraphQL Root 解析器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-GraphQL-字段解析器"><span class="nav-text">实现 GraphQL 字段解析器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行应用并检查结果"><span class="nav-text">运行应用并检查结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进一步学习资源"><span class="nav-text">进一步学习资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源代码"><span class="nav-text">源代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kba977</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://kba977-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://kba977.github.io/2020/04/25/Web开发/SpringBoot_GraphQL_MySQL实现CRUD/';
+          this.page.identifier = '2020/04/25/Web开发/SpringBoot_GraphQL_MySQL实现CRUD/';
+          this.page.title = 'SpringBoot + GraphQL + Mysql 实现 CRUD';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kba977-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("V9V704cXk4rzl0xmvcaoxXj6-gzGzoHsz", "l6sfaXh824aQ75iwbUwla8ry");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

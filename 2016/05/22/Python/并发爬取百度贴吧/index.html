@@ -1,0 +1,1121 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="爬虫,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="撰写本文目的在于学习python的几个模块和多线程的一些知识用到的python知识有:  requests lxml xpath (严格来不该成为模块, 是一种提取数据的方法) multiprocess.dummy, Pool, 线程池 map 函数">
+<meta name="keywords" content="爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="并发爬取百度贴吧">
+<meta property="og:url" content="http://kba977.github.io/2016/05/22/Python/并发爬取百度贴吧/index.html">
+<meta property="og:site_name" content="kba977の空想庭院">
+<meta property="og:description" content="撰写本文目的在于学习python的几个模块和多线程的一些知识用到的python知识有:  requests lxml xpath (严格来不该成为模块, 是一种提取数据的方法) multiprocess.dummy, Pool, 线程池 map 函数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-09-09T03:28:45.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="并发爬取百度贴吧">
+<meta name="twitter:description" content="撰写本文目的在于学习python的几个模块和多线程的一些知识用到的python知识有:  requests lxml xpath (严格来不该成为模块, 是一种提取数据的方法) multiprocess.dummy, Pool, 线程池 map 函数">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '5250582',
+      author: '管理员'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kba977.github.io/2016/05/22/Python/并发爬取百度贴吧/">
+
+
+
+
+
+  <title> 并发爬取百度贴吧 | kba977の空想庭院 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+      <div class="site-meta-headline">
+        <a>
+          <img class="custom-logo-image" src="/images/profile.jpg" alt="kba977の空想庭院">
+        </a>
+      </div>
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">kba977の空想庭院</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'QmHEhWuDFZMPxZ1LcfFx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kba977.github.io/2016/05/22/Python/并发爬取百度贴吧/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kba977">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kba977の空想庭院">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                并发爬取百度贴吧
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-22T14:52:40+08:00">
+                2016-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/22/Python/并发爬取百度贴吧/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/05/22/Python/并发爬取百度贴吧/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/05/22/Python/并发爬取百度贴吧/" class="leancloud_visitors" data-flag-title="并发爬取百度贴吧">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>撰写本文目的在于学习python的几个模块和多线程的一些知识<br>用到的python知识有:</p>
+<ul>
+<li>requests</li>
+<li>lxml</li>
+<li>xpath (严格来不该成为模块, 是一种提取数据的方法)</li>
+<li>multiprocess.dummy, Pool, 线程池</li>
+<li>map 函数</li>
+</ul>
+<a id="more"></a>
+<p>本文分以下俩大部分介绍： 首先简单介绍以上各个知识, 最后以一则爬去百度贴吧回复的实例来演示</p>
+<h2 id="一-各个知识简要介绍"><a href="#一-各个知识简要介绍" class="headerlink" title="一. 各个知识简要介绍"></a>一. 各个知识简要介绍</h2><hr>
+<h3 id="1-requests"><a href="#1-requests" class="headerlink" title="1. requests"></a>1. requests</h3><h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>虽然 python 已经有了 urllib 之类的网络库 但是,使用 requests 可以让 Web 客户端开发变得更加简单, 你可以<a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html" target="_blank" rel="noopener">阅读文档</a>获取更多的信息。 本文会简单介绍 requests 的基本用法。<br>正如 Requests 的官方文档所说<br><blockquote><ol>
+<li>Requests 是使用 Apache2 Licensed 许可证的 HTTP 库。用 Python 编写，真正的为人类着想。</li>
+<li>Python 标准库中的 urllib2 模块提供了你所需要的大多数 HTTP 功能，但是它的 API 太渣了。它是为另一个时代、另一个互联网所创建的。它需要巨量的工作，甚至包括各种方法覆盖，来完成最简单的任务。在Python的世界里，事情不应该这么麻烦。</li>
+<li>Requests 使用的是 urllib3，因此继承了它的所有特性。Requests 支持 HTTP 连接保持和连接池，支持使用 cookie 保持会话，支持文件上传，支持自动确定响应内容的编码，支持国际化的 URL 和 POST 数据自动编码。现代、国际化、人性化。</li>
+</ol>
+<footer><strong>Requests官方文档,</strong><cite><a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html" target="_blank" rel="noopener">docs.python-requests.org/zh_CN/latest/user/quickstart.html</a></cite></footer></blockquote></p>
+<p>下面我们来看看 Requests 有那些基本用法</p>
+<h4 id="发送-http-请求"><a href="#发送-http-请求" class="headerlink" title="发送 http 请求"></a>发送 http 请求</h4><p>支持的http 方法有 method = [<code>get</code>, <code>post</code>, <code>put</code>, <code>delete</code>, <code>head</code>, <code>options</code>]<br>所有的请求Api都是统一的<code>requests.method(url)</code>, 如一个get请求:</p>
+<pre><code>&gt;&gt;&gt; r = requests.get(&quot;http://www.baidu.com&quot;)
+</code></pre><h4 id="URL-传递参数"><a href="#URL-传递参数" class="headerlink" title="URL 传递参数"></a>URL 传递参数</h4><p>在 requests 中, 允许使用 params 关键字参数, 以一个字典来提供这些参数。如:<br>要请求的 url 为 <code>http://www.baidu.com/get?key1=val1&amp;key2=val2</code><br>则可以如下 构造代码:</p>
+<pre><code>&gt;&gt;&gt; payload = {&apos;key1&apos;: &apos;val1&apos;, &apos;key2&apos;: &apos;val2&apos;}
+&gt;&gt;&gt; r = requests.get(&quot;http://www.baidu.com/get&quot;, params=payload)
+</code></pre><h4 id="获取响应的内容"><a href="#获取响应的内容" class="headerlink" title="获取响应的内容"></a>获取响应的内容</h4><pre><code>&gt;&gt;&gt; print r.content  ## 以字节的方式显示, 中文显示为字符
+&gt;&gt;&gt; print r.text  ## 以文本的方式去显示
+</code></pre><p>Requests会自动解码来自服务器的内容。大多数unicode字符集都能被无缝地解码。</p>
+<h4 id="获取-修改网页编码"><a href="#获取-修改网页编码" class="headerlink" title="获取/修改网页编码"></a>获取/修改网页编码</h4><pre><code>&gt;&gt;&gt; r = requests.get(&apos;https://github.com/timeline.json&apos;)
+&gt;&gt;&gt; print r.encoding
+&apos;utf-8&apos;
+</code></pre><h4 id="json处理"><a href="#json处理" class="headerlink" title="json处理"></a>json处理</h4><pre><code>&gt;&gt;&gt; r = requests.get(&apos;https://github.com/timeline.json&apos;)
+&gt;&gt;&gt; print r.json()
+</code></pre><h4 id="定制请求头"><a href="#定制请求头" class="headerlink" title="定制请求头"></a>定制请求头</h4><pre><code>&gt;&gt;&gt; url = &apos;http://www.baidu.com&apos;
+&gt;&gt;&gt; headers = {&apos;User-Agent&apos; : &apos;Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 4 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19&apos;}
+&gt;&gt;&gt; r = requests.post(url, headers=headers)
+&gt;&gt;&gt; print r.request.headers
+</code></pre><h4 id="复杂post请求"><a href="#复杂post请求" class="headerlink" title="复杂post请求"></a>复杂post请求</h4><pre><code>&gt;&gt;&gt; url = &apos;http://www.baidu.com&apos;
+&gt;&gt;&gt; payload = {&apos;some&apos;: &apos;data&apos;}
+&gt;&gt;&gt; r = requests.post(url, data=json.dumps(payload)) 
+# 如果传递的payload是string而不是dict，需要先调用dumps方法格式化一下
+</code></pre><h4 id="响应状态码"><a href="#响应状态码" class="headerlink" title="响应状态码"></a>响应状态码</h4><pre><code>&gt;&gt;&gt; r = requests.get(&apos;http://www.baidu.com&apos;)
+&gt;&gt;&gt; print r.status_code
+</code></pre><h4 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h4><pre><code>&gt;&gt;&gt; r = requests.get(&apos;http://www.baidu.com&apos;)
+&gt;&gt;&gt; print r.headers
+&gt;&gt;&gt; print r.headers[&apos;Content-Type&apos;]
+&gt;&gt;&gt; print r.headers.get(&apos;content-type&apos;) #访问响应头部分内容的两种方式
+</code></pre><h4 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h4><pre><code>&gt;&gt;&gt; url = &apos;http://example.com/some/cookie/setting/url&apos;
+&gt;&gt;&gt; r = requests.get(url)
+&gt;&gt;&gt; r.cookies[&apos;example_cookie_name&apos;]    #读取cookies
+
+&gt;&gt;&gt; url = &apos;http://www.baidu.com/cookies&apos;
+&gt;&gt;&gt; cookies = dict(cookies_are=&apos;working&apos;)
+&gt;&gt;&gt; r = requests.get(url, cookies=cookies) #发送cookies
+</code></pre><p>#设置超时时间<br>    &gt;&gt;&gt; r = requests.get(‘<a href="http://www.baidu.com&#39;" target="_blank" rel="noopener">http://www.baidu.com&#39;</a>, timeout=0.001)</p>
+<p>#设置访问代理<br>    &gt;&gt;&gt; proxies = {<br>            “http”: “<a href="http://10.10.10.10:8888&quot;" target="_blank" rel="noopener">http://10.10.10.10:8888&quot;</a>,<br>            “https”: “<a href="http://10.10.10.100:4444&quot;" target="_blank" rel="noopener">http://10.10.10.100:4444&quot;</a>,<br>        }<br>    &gt;&gt;&gt; r = requests.get(‘<a href="http://www.baidu.com&#39;" target="_blank" rel="noopener">http://www.baidu.com&#39;</a>, proxies=proxies)</p>
+<h3 id="2-lxml"><a href="#2-lxml" class="headerlink" title="2. lxml"></a>2. lxml</h3><blockquote>
+<p>lxm是Python的一个html/xml解析并建立dom的库，lxml的特点是功能强大，性能也不错，xml包含了ElementTree ，html5lib ，beautfulsoup 等库，但是lxml也有自己相对应的库，所以，导致lxml比较复杂，初次使用者很难了解其关系。</p>
+</blockquote>
+<p>本文我们只用到etree将html变成可xpath的对象, 有兴趣的同学可以<a href="http://lxml.de/" target="_blank" rel="noopener">查看文档</a>进行深一步的学习lxml更多的功能。</p>
+<h3 id="3-Xpath"><a href="#3-Xpath" class="headerlink" title="3. Xpath"></a>3. Xpath</h3><h4 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h4><blockquote><p>XPath即为XML路径语言（XML Path Language），它是一种用来确定XML文档中某部分位置的语言。</p>
+<p>XPath基于XML的树状结构，提供在数据结构树中找寻节点的能力。起初XPath的提出的初衷是将其作为一个通用的、介于XPointer与XSL间的语法模型。但是XPath很快的被开发者采用来当作小型查询语言。</p>
+<footer><strong>维基百科,</strong><cite><a href="https://zh.wikipedia.org/wiki/XPath" target="_blank" rel="noopener">zh.wikipedia.org/wiki/XPath</a></cite></footer></blockquote>
+<p>我们都知道HMTL的结构是<code>树形结构</code>, 逐层展开的。<br>Xpath 正是基于 HTML 的这种结构来寻找其中的某个具体的节点的。</p>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>下面让我们以一段例子来说明如何用 Xpath 寻找 html 中的信息</p>
+<figure class="highlight html"><figcaption><span>index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Xpath 学习<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"useful"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>这是第一条信息<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>这是第二条信息<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>这是第三条信息<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"useless"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>不需要的信息1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>不需要的信息2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>不需要的信息3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"url"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.baidu.com"</span>&gt;</span>百度<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.google.com"</span>&gt;</span>Google<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"test-1"</span>&gt;</span>需要的内容1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"test-2"</span>&gt;</span>需要的内容2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"testdefualt"</span>&gt;</span>需要的内容3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"nest"</span>&gt;</span></span><br><span class="line">            Hi,</span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>美女,<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"color: red"</span>&gt;</span>你的微信号是多少呀?<span class="tag">&lt;/<span class="name">span</span>&gt;</span>   </span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><figcaption><span>code.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'index.html'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    html = f.read()</span><br><span class="line"></span><br><span class="line">selector = etree.HTML(html)</span><br><span class="line"></span><br><span class="line">title = selector.xpath(<span class="string">'//title/text()'</span>)[<span class="number">0</span>]</span><br><span class="line">usefulitems = selector.xpath(<span class="string">'//ul[@id="useful"]/li/text()'</span>)</span><br><span class="line">uselessitems = selector.xpath(<span class="string">'//ul[@id="useless"]/li/text()'</span>)</span><br><span class="line">urlitems = selector.xpath(<span class="string">'//div[@class="url"]/a/@href'</span>)</span><br><span class="line">startWithItems = selector.xpath(<span class="string">'//div[starts-with(@id, "test")]/text()'</span>)</span><br><span class="line">nest = selector.xpath(<span class="string">'//div[@class="nest"]'</span>)[<span class="number">0</span>].xpath(<span class="string">'string(.)'</span>).replace(<span class="string">" "</span>, <span class="string">""</span>).replace(<span class="string">"\n"</span>,<span class="string">""</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"title: \n\t"</span>, title</span><br><span class="line"><span class="keyword">print</span> <span class="string">"useful: \n\t"</span>, <span class="string">","</span>.join(usefulitems)</span><br><span class="line"><span class="keyword">print</span> <span class="string">"useless: \n\t"</span>, <span class="string">","</span>.join(uselessitems)</span><br><span class="line"><span class="keyword">print</span> <span class="string">"urls: \n\t"</span>, <span class="string">","</span>.join(urlitems)</span><br><span class="line"><span class="keyword">print</span> <span class="string">"startWithItems: \n\t"</span>, <span class="string">","</span>.join(startWithItems)</span><br><span class="line"><span class="keyword">print</span> <span class="string">"nest: \n\t"</span>, nest</span><br></pre></td></tr></table></figure>
+<p>如上11-16行主要为Xpath提取节点的过程, 通过代码我们可以看出一下规律</p>
+<ol>
+<li>都是以<code>//</code>开头, 表示我们从整个html的根开始查找</li>
+<li>所有html的标签直接写名字即可: 如: <code>title</code>, <code>div</code>, <code>ul</code>, <code>a</code>等</li>
+<li>所有的属性以<code>@</code>开头, 如: <code>id</code>, <code>class</code>等</li>
+<li>text(), 提取标签下的文本</li>
+<li>starts-with, 用来提取以相同字符串开头的某些节点</li>
+<li>string(.), 用来提取那些嵌套在标签里的文本</li>
+</ol>
+<p>以下是上述代码运行的结果: </p>
+<pre><code>title: 
+    Xpath 学习
+useful: 
+    这是第一条信息,这是第二条信息,这是第三条信息
+useless: 
+    不需要的信息1,不需要的信息2,不需要的信息3
+urls: 
+    http://www.baidu.com,http://www.google.com
+startWithItems: 
+    需要的内容1,需要的内容2,需要的内容3
+nest: 
+    Hi,美女,你的微信号是多少呀?
+</code></pre><h2 id="二-实例演示"><a href="#二-实例演示" class="headerlink" title="二. 实例演示"></a>二. 实例演示</h2><hr>
+<h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><figure class="highlight python"><figcaption><span>TiebaSpider.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">writeFile</span><span class="params">(item)</span>:</span></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">"content.txt"</span>, <span class="string">'a+'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(<span class="string">u'用户名: '</span> + item[<span class="string">'user'</span>] + <span class="string">"\t"</span> + <span class="string">u'时间: '</span> + item[<span class="string">'time'</span>] + <span class="string">"\n"</span>)</span><br><span class="line">        f.write(<span class="string">u'内容: \n'</span> + item[<span class="string">'content'</span>] + <span class="string">"\n"</span>)</span><br><span class="line">        f.write(<span class="string">'-'</span>*<span class="number">50</span> + <span class="string">"\n"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">spider</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"downloading: "</span>, url</span><br><span class="line">    html = requests.get(url)</span><br><span class="line">    selector = etree.HTML(html.text)</span><br><span class="line">    content_fields = selector.xpath(<span class="string">'//div[@class="l_post j_l_post l_post_bright  "]'</span>)</span><br><span class="line">    <span class="keyword">for</span> each <span class="keyword">in</span> content_fields:</span><br><span class="line">        reply_info = json.loads(each.xpath(<span class="string">'@data-field'</span>)[<span class="number">0</span>])</span><br><span class="line">        </span><br><span class="line">        user = reply_info[<span class="string">'author'</span>][<span class="string">'user_name'</span>]</span><br><span class="line">        time = reply_info[<span class="string">'content'</span>][<span class="string">'date'</span>]</span><br><span class="line">        content = each.xpath(<span class="string">'div[@class="d_post_content_main"]//div[@class="d_post_content j_d_post_content  clearfix"]'</span>)[<span class="number">0</span>].xpath(<span class="string">"string(.)"</span>)</span><br><span class="line">        </span><br><span class="line">        item = &#123;&#125;</span><br><span class="line">        item[<span class="string">'user'</span>] = user</span><br><span class="line">        item[<span class="string">'time'</span>] = time</span><br><span class="line">        item[<span class="string">'content'</span>] = content</span><br><span class="line">        writeFile(item)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    urls = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>,<span class="number">10</span>):</span><br><span class="line">        urls.append(<span class="string">"http://tieba.baidu.com/p/4558076253?pn=%s"</span>%i)</span><br><span class="line">    </span><br><span class="line">    pool = ThreadPool()</span><br><span class="line">    pool.map(spider, urls)</span><br><span class="line">    pool.close()</span><br><span class="line">    pool.join()</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"done"</span></span><br></pre></td></tr></table></figure>
+<h3 id="抓取结果"><a href="#抓取结果" class="headerlink" title="抓取结果"></a>抓取结果</h3><pre><code>用户名: babylengyan    时间: 2016-05-20 00:17
+内容: 
+            抽不中
+--------------------------------------------------
+用户名: MiMi宝宝一    时间: 2016-05-20 00:17
+内容: 
+            好
+--------------------------------------------------
+用户名: 冬眠祭prince  时间: 2016-05-20 00:18
+内容: 
+            凑热闹
+--------------------------------------------------
+用户名: 独壹无贰婷女子    时间: 2016-05-20 00:23
+内容: 
+            我没看见
+--------------------------------------------------
+用户名: 独壹无贰婷女子    时间: 2016-05-20 00:24
+内容: 
+            谁看见我男友了吗
+--------------------------------------------------
+用户名: 独壹无贰婷女子    时间: 2016-05-20 00:24
+内容: 
+            让他快点来找我
+--------------------------------------------------
+用户名: 独壹无贰婷女子    时间: 2016-05-20 00:24
+内容: 
+            车费报销，
+......
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/14/网络安全/Sql手工注入过程/" rel="next" title="Sql手工注入过程">
+                <i class="fa fa-chevron-left"></i> Sql手工注入过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/25/Python/Python数据可视化/" rel="prev" title="Python数据可视化">
+                Python数据可视化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/profile.jpg" alt="kba977">
+          <p class="site-author-name" itemprop="name">kba977</p>
+           
+              <p class="site-description motion-element" itemprop="description">什么都略懂一点, 生活更精彩一些</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100004387297679" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook-official"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/kba977" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kba977" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1582389907" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:kba977@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://luowenhui.blog.51cto.com" title="兔兔西的Blog" target="_blank">兔兔西的Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.brucezhou.com" title="夜殇的小站" target="_blank">夜殇的小站</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.libinx.com" title="Thinking Realm" target="_blank">Thinking Realm</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-各个知识简要介绍"><span class="nav-text">一. 各个知识简要介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-requests"><span class="nav-text">1. requests</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发送-http-请求"><span class="nav-text">发送 http 请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#URL-传递参数"><span class="nav-text">URL 传递参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取响应的内容"><span class="nav-text">获取响应的内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取-修改网页编码"><span class="nav-text">获取/修改网页编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#json处理"><span class="nav-text">json处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定制请求头"><span class="nav-text">定制请求头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复杂post请求"><span class="nav-text">复杂post请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#响应状态码"><span class="nav-text">响应状态码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#响应头"><span class="nav-text">响应头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cookies"><span class="nav-text">Cookies</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-lxml"><span class="nav-text">2. lxml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Xpath"><span class="nav-text">3. Xpath</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-1"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本用法"><span class="nav-text">基本用法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-实例演示"><span class="nav-text">二. 实例演示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例代码"><span class="nav-text">实例代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抓取结果"><span class="nav-text">抓取结果</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kba977</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://kba977-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://kba977.github.io/2016/05/22/Python/并发爬取百度贴吧/';
+          this.page.identifier = '2016/05/22/Python/并发爬取百度贴吧/';
+          this.page.title = '并发爬取百度贴吧';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kba977-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("V9V704cXk4rzl0xmvcaoxXj6-gzGzoHsz", "l6sfaXh824aQ75iwbUwla8ry");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

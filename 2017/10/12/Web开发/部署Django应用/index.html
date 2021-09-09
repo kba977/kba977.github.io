@@ -1,0 +1,1093 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Django,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="原文链接: How to Deploy a Django Application to Digital Ocean 默认你已经拥有自己的云主机, 本文系统为 Ubuntu 16.04, 其他类Unix系统操作类似 安装服务环境依赖首先我们更新源 12sudo apt-get updatesudo apt-get -y upgrade">
+<meta name="keywords" content="Django">
+<meta property="og:type" content="article">
+<meta property="og:title" content="部署Django应用">
+<meta property="og:url" content="http://kba977.github.io/2017/10/12/Web开发/部署Django应用/index.html">
+<meta property="og:site_name" content="kba977の空想庭院">
+<meta property="og:description" content="原文链接: How to Deploy a Django Application to Digital Ocean 默认你已经拥有自己的云主机, 本文系统为 Ubuntu 16.04, 其他类Unix系统操作类似 安装服务环境依赖首先我们更新源 12sudo apt-get updatesudo apt-get -y upgrade">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/部署Django应用/1.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/部署Django应用/2.jpg">
+<meta property="og:updated_time" content="2021-09-09T03:28:45.377Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="部署Django应用">
+<meta name="twitter:description" content="原文链接: How to Deploy a Django Application to Digital Ocean 默认你已经拥有自己的云主机, 本文系统为 Ubuntu 16.04, 其他类Unix系统操作类似 安装服务环境依赖首先我们更新源 12sudo apt-get updatesudo apt-get -y upgrade">
+<meta name="twitter:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/部署Django应用/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '5250582',
+      author: '管理员'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kba977.github.io/2017/10/12/Web开发/部署Django应用/">
+
+
+
+
+
+  <title> 部署Django应用 | kba977の空想庭院 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+      <div class="site-meta-headline">
+        <a>
+          <img class="custom-logo-image" src="/images/profile.jpg" alt="kba977の空想庭院">
+        </a>
+      </div>
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">kba977の空想庭院</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'QmHEhWuDFZMPxZ1LcfFx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kba977.github.io/2017/10/12/Web开发/部署Django应用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kba977">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kba977の空想庭院">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                部署Django应用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-12T17:43:48+08:00">
+                2017-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Web开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/12/Web开发/部署Django应用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/10/12/Web开发/部署Django应用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/12/Web开发/部署Django应用/" class="leancloud_visitors" data-flag-title="部署Django应用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文链接: <a href="https://simpleisbetterthancomplex.com/tutorial/2016/10/14/how-to-deploy-to-digital-ocean.html" target="_blank" rel="noopener">How to Deploy a Django Application to Digital Ocean</a></p>
+<p>默认你已经拥有自己的云主机, 本文系统为 Ubuntu 16.04, 其他类Unix系统操作类似</p>
+<h1 id="安装服务环境依赖"><a href="#安装服务环境依赖" class="headerlink" title="安装服务环境依赖"></a>安装服务环境依赖</h1><p>首先我们更新源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get -y upgrade</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="NGINX"><a href="#NGINX" class="headerlink" title="NGINX"></a>NGINX</h2><p>安装 NGINX, NGINX被用来托管静态资源(样式, 脚本, 图片)和运行我们的Django应用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get -y install nginx</span><br></pre></td></tr></table></figure>
+<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2><p>Supervisor 将启动并管理我们的Django应用以防止其宕机和重启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get -y install supervisor</span><br></pre></td></tr></table></figure>
+<p>使启用并启动 Supervisor:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> supervisor</span><br><span class="line">sudo systemctl start supervisor</span><br></pre></td></tr></table></figure>
+<h2 id="Python-Virtualenv"><a href="#Python-Virtualenv" class="headerlink" title="Python Virtualenv"></a>Python Virtualenv</h2><p>为了更好的管理python环境依赖, 我们将 Django 应用部署在 Python 的虚拟环境里</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get -y install python-virtualenv</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="配置应用用户-Application-User"><a href="#配置应用用户-Application-User" class="headerlink" title="配置应用用户(Application User)"></a>配置应用用户(Application User)</h1><p>用下面的命令创建一个新的用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adduser <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<p>你会看到类似下面的输出:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Adding user `<span class="built_in">test</span><span class="string">' ...</span></span><br><span class="line"><span class="string">Adding new group `test'</span> (1001) ...</span><br><span class="line">Adding new user `<span class="built_in">test</span><span class="string">' (1001) with group `test'</span> ...</span><br><span class="line">Creating home directory `/home/<span class="built_in">test</span><span class="string">' ...</span></span><br><span class="line"><span class="string">Copying files from `/etc/skel'</span> ...</span><br><span class="line">Enter new UNIX password: </span><br><span class="line">Retype new UNIX password: </span><br><span class="line">passwd: password updated successfully</span><br><span class="line">Changing the user information <span class="keyword">for</span> <span class="built_in">test</span></span><br><span class="line">Enter the new value, or press ENTER <span class="keyword">for</span> the default</span><br><span class="line">    Full Name []: </span><br><span class="line">    Room Number []: </span><br><span class="line">    Work Phone []: </span><br><span class="line">    Home Phone []: </span><br><span class="line">    Other []: </span><br><span class="line">Is the information correct? [Y/n] y</span><br></pre></td></tr></table></figure>
+<p>添加该用户到超级用户列表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpasswd -a <span class="built_in">test</span> sudo</span><br></pre></td></tr></table></figure>
+<p>切换到上步创建的用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su - <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="配置-Python-虚拟环境"><a href="#配置-Python-虚拟环境" class="headerlink" title="配置 Python 虚拟环境"></a>配置 Python 虚拟环境</h1><p>这时我们登录到了 <strong>test</strong> 用户, 安装 Django 应用到该用户的家目录下 <code>/home/test</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virtualenv .</span><br></pre></td></tr></table></figure>
+<p>激活它并安装 Django:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> bin/activate</span><br><span class="line">pip install django</span><br></pre></td></tr></table></figure>
+<p>创建我们的 Django 项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject myTest</span><br></pre></td></tr></table></figure>
+<p>此时我们的家目录结构应该是下面这样的:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/home/<span class="built_in">test</span></span><br><span class="line">    ├── bin/</span><br><span class="line">    ├── include/</span><br><span class="line">    ├── lib/</span><br><span class="line">    ├── <span class="built_in">local</span>/</span><br><span class="line">    ├── myTest/    &lt;-- Django 应用</span><br><span class="line">    ├── pip-selfcheck.json</span><br><span class="line">    └── share/</span><br></pre></td></tr></table></figure>
+<p>首先打开 <strong>myTest</strong> 目录:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> myTest</span><br></pre></td></tr></table></figure>
+<p>迁移数据库文件:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure></p>
+<p>测试一下是否一切正常:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver 0.0.0.0:8000</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/部署Django应用/1.jpg" alt="1.png"></p>
+<p>这只是一个测试, 我们将不会使用 <code>runserver</code> 来跑起我们的应用, 而是使用另外一个更加适合的工具</p>
+<p>按下 <code>CONTROL-C</code> 退出进程</p>
+<hr>
+<h1 id="配置-Gunicorn"><a href="#配置-Gunicorn" class="headerlink" title="配置 Gunicorn"></a>配置 Gunicorn</h1><p>首先在虚拟环境中安装 <strong>Gunicorn</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install gunicorn</span><br></pre></td></tr></table></figure>
+<p>创建一个名为 <strong>gunicon_start</strong> 的文件,并放在 <strong>bin/</strong> 目录下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim bin/gunicorn_start</span><br></pre></td></tr></table></figure>
+<p>添加下面的信息并保存:</p>
+<figure class="highlight plain"><figcaption><span>/home/test/bingunicorn_start</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">NAME=&apos;myTest&apos;</span><br><span class="line">DIR=/home/test/myTest</span><br><span class="line">USER=test</span><br><span class="line">GROUP=test</span><br><span class="line">WORKERS=3</span><br><span class="line">BIND=unix:/home/test/run/gunicorn.sock</span><br><span class="line">DJANGO_SETTINGS_MODULE=myTest.settings</span><br><span class="line">DJANGO_WSGI_MODULE=myTest.wsgi</span><br><span class="line">LOG_LEVEL=error</span><br><span class="line"></span><br><span class="line">cd $DIR</span><br><span class="line">source ../bin/activate</span><br><span class="line"></span><br><span class="line">export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE</span><br><span class="line">export PYTHONPATH=$DIR:$PYTHONPATH</span><br><span class="line"></span><br><span class="line">exec ../bin/gunicorn $&#123;DJANGO_WSGI_MODULE&#125;:application \</span><br><span class="line">  --name $NAME \</span><br><span class="line">  --workers $WORKERS \</span><br><span class="line">  --user=$USER \</span><br><span class="line">  --group=$GROUP \</span><br><span class="line">  --bind=$BIND \</span><br><span class="line">  --log-level=$LOG_LEVEL \</span><br><span class="line">  --log-file=-</span><br></pre></td></tr></table></figure>
+<p>赋予 <strong>gunicorn_start</strong> 文件可执行权限:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod u+x bin/gunicorn_start</span><br></pre></td></tr></table></figure>
+<p>创建名为 <strong>run</strong> 的文件夹, 以供后续配置使用:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir run</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="配置-Supervisor"><a href="#配置-Supervisor" class="headerlink" title="配置 Supervisor"></a>配置 Supervisor</h1><p>现在我们需要配置 Supervisor 去管控 gunicorn服务</p>
+<p>首先, 在虚拟环境中创建 <strong>logs</strong> 目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir logs</span><br></pre></td></tr></table></figure>
+<p>创建一个用来输出应用错误日志的文件:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch logs/gunicorn-error.log</span><br></pre></td></tr></table></figure>
+<p>创建一个新的 Supervisor 配置文件:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/supervisor/conf.d/myTest.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>/etc/supervisor/conf.d/myTest.conf</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[program:myTest]</span><br><span class="line">command=/home/test/bin/gunicorn_start</span><br><span class="line">user=test</span><br><span class="line">autostart=true</span><br><span class="line">autorestart=true</span><br><span class="line">redirect_stderr=true</span><br><span class="line">stdout_logfile=/home/test/logs/gunicorn-error.log</span><br></pre></td></tr></table></figure>
+<p>刷新 Supervisor 配置文件, 并且使得上步配置生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo supervisorctl reread</span><br><span class="line">sudo supervisorctl update</span><br></pre></td></tr></table></figure>
+<p>检查服务状态:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo supervisorctl status myTest</span><br><span class="line">myTest                           RUNNING   pid 84573, uptime 00:00:15</span><br></pre></td></tr></table></figure>
+<p>现在, 你可以使用 Supervisor 来控制你的应用. 如果你想要更新源代码, 只需将最新代码从仓库拉取下来后, 重启进程即可:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo supervisorctl restart myTest</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="配置-NGINX"><a href="#配置-NGINX" class="headerlink" title="配置 NGINX"></a>配置 NGINX</h1><p>在 <strong>/etc/nginx/sites-available/</strong> 目录下创建一个新的名叫 myTest 的配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/nginx/sites-available/myTest</span><br></pre></td></tr></table></figure>
+<figure class="highlight nginx"><figcaption><span>/etc/nginx/sites-available/myTest</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> app_server &#123;</span><br><span class="line">    <span class="attribute">server</span> unix:/home/test/run/gunicorn.sock fail_timeout=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># add here the ip address of your server</span></span><br><span class="line">    <span class="comment"># or a domain pointing to that ip (like example.com or www.example.com)</span></span><br><span class="line">    <span class="attribute">server_name</span> <span class="number">107.170.28.172</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">keepalive_timeout</span> <span class="number">5</span>;</span><br><span class="line">    <span class="attribute">client_max_body_size</span> <span class="number">4G</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">access_log</span> /home/test/logs/nginx-access.log;</span><br><span class="line">    <span class="attribute">error_log</span> /home/test/logs/nginx-<span class="literal">error</span>.log;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> /static/ &#123;</span><br><span class="line">        <span class="attribute">alias</span> /home/test/static/;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># checks for static file, if not found proxy to app</span></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">@proxy_to_app</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> <span class="variable">@proxy_to_app</span> &#123;</span><br><span class="line">      <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">      <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">      <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">      <span class="attribute">proxy_pass</span> http://app_server;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建一个软连接到 <strong>sites-enabled</strong> 目录下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /etc/nginx/sites-available/myTest /etc/nginx/sites-enabled/myTest</span><br></pre></td></tr></table></figure>
+<p>删除 NGINX 默认的网站:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /etc/nginx/site-enabled/default</span><br></pre></td></tr></table></figure>
+<p>重启 NGINX:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service nginx restart</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="最终测试"><a href="#最终测试" class="headerlink" title="最终测试"></a>最终测试</h1><p>这时, 你的应用应该已经跑起, 打开浏览器并查看:</p>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/部署Django应用/2.jpg" alt="2.png"></p>
+<p>最终测试时, 我习惯重启机器, 并查看应用是否能够自动重启:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
+<p>等待一会, 通过浏览器进入网站. 如果一切加载正常, 说明一切 OK, 所有的进程都已经自动的启动</p>
+<hr>
+<h1 id="更新应用"><a href="#更新应用" class="headerlink" title="更新应用"></a>更新应用</h1><p>当你更新 Django 应用时候, 通常要遵循下面的步骤:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ssh <span class="built_in">test</span>@192.168.1.175</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> bin/activate</span><br><span class="line"><span class="built_in">cd</span> myTest</span><br><span class="line">git pull origin master</span><br><span class="line">python manage.py collectstatic</span><br><span class="line">python manage.py migrate</span><br><span class="line">sudo supervisorctl restart myTest</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>忠心的希望该文章对你有用, 如果有任何问题, 欢迎留言讨论.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Django/" rel="tag"># Django</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/05/工具/懒人工具-一键上传博客图片到七牛对象存储/" rel="next" title="懒人工具-一键上传博客图片到七牛对象存储">
+                <i class="fa fa-chevron-left"></i> 懒人工具-一键上传博客图片到七牛对象存储
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/13/Web开发/在Django中使用Celery和RabbitMQ/" rel="prev" title="在Django中使用Celery和RabbitMQ">
+                在Django中使用Celery和RabbitMQ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/profile.jpg" alt="kba977">
+          <p class="site-author-name" itemprop="name">kba977</p>
+           
+              <p class="site-description motion-element" itemprop="description">什么都略懂一点, 生活更精彩一些</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100004387297679" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook-official"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/kba977" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kba977" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1582389907" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:kba977@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://luowenhui.blog.51cto.com" title="兔兔西的Blog" target="_blank">兔兔西的Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.brucezhou.com" title="夜殇的小站" target="_blank">夜殇的小站</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.libinx.com" title="Thinking Realm" target="_blank">Thinking Realm</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装服务环境依赖"><span class="nav-text">安装服务环境依赖</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NGINX"><span class="nav-text">NGINX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Supervisor"><span class="nav-text">Supervisor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-Virtualenv"><span class="nav-text">Python Virtualenv</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置应用用户-Application-User"><span class="nav-text">配置应用用户(Application User)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-Python-虚拟环境"><span class="nav-text">配置 Python 虚拟环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-Gunicorn"><span class="nav-text">配置 Gunicorn</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-Supervisor"><span class="nav-text">配置 Supervisor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-NGINX"><span class="nav-text">配置 NGINX</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终测试"><span class="nav-text">最终测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新应用"><span class="nav-text">更新应用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kba977</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://kba977-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://kba977.github.io/2017/10/12/Web开发/部署Django应用/';
+          this.page.identifier = '2017/10/12/Web开发/部署Django应用/';
+          this.page.title = '部署Django应用';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kba977-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("V9V704cXk4rzl0xmvcaoxXj6-gzGzoHsz", "l6sfaXh824aQ75iwbUwla8ry");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

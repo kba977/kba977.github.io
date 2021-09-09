@@ -1,0 +1,1035 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="爬虫,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="本节是Scrapy系列中的一节, 主要是多页面, 多Item和 图片下载功能的爬取。   本次我们要爬取的站是我个人非常喜欢的一个站点， 即韩寒的一个, 每天会更新一张图片, 一句话, 一篇文章和一个问答, 页面十分简洁。如下图所示:">
+<meta name="keywords" content="爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy爬虫系列之一个整站爬取">
+<meta property="og:url" content="http://kba977.github.io/2016/06/09/Scrapy爬虫系列/Scrapy爬虫系列之一个整站爬取/index.html">
+<meta property="og:site_name" content="kba977の空想庭院">
+<meta property="og:description" content="本节是Scrapy系列中的一节, 主要是多页面, 多Item和 图片下载功能的爬取。   本次我们要爬取的站是我个人非常喜欢的一个站点， 即韩寒的一个, 每天会更新一张图片, 一句话, 一篇文章和一个问答, 页面十分简洁。如下图所示:">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/1_一张图片.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/2_一篇文章.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/3_一个回答.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/4_数据入库.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/5_效果图.jpg">
+<meta property="og:updated_time" content="2021-09-09T03:28:45.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scrapy爬虫系列之一个整站爬取">
+<meta name="twitter:description" content="本节是Scrapy系列中的一节, 主要是多页面, 多Item和 图片下载功能的爬取。   本次我们要爬取的站是我个人非常喜欢的一个站点， 即韩寒的一个, 每天会更新一张图片, 一句话, 一篇文章和一个问答, 页面十分简洁。如下图所示:">
+<meta name="twitter:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/1_一张图片.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '5250582',
+      author: '管理员'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kba977.github.io/2016/06/09/Scrapy爬虫系列/Scrapy爬虫系列之一个整站爬取/">
+
+
+
+
+
+  <title> Scrapy爬虫系列之一个整站爬取 | kba977の空想庭院 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+      <div class="site-meta-headline">
+        <a>
+          <img class="custom-logo-image" src="/images/profile.jpg" alt="kba977の空想庭院">
+        </a>
+      </div>
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">kba977の空想庭院</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'QmHEhWuDFZMPxZ1LcfFx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kba977.github.io/2016/06/09/Scrapy爬虫系列/Scrapy爬虫系列之一个整站爬取/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kba977">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/profile.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kba977の空想庭院">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Scrapy爬虫系列之一个整站爬取
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-09T10:29:53+08:00">
+                2016-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Scrapy爬虫系列/" itemprop="url" rel="index">
+                    <span itemprop="name">Scrapy爬虫系列</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/09/Scrapy爬虫系列/Scrapy爬虫系列之一个整站爬取/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/06/09/Scrapy爬虫系列/Scrapy爬虫系列之一个整站爬取/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/06/09/Scrapy爬虫系列/Scrapy爬虫系列之一个整站爬取/" class="leancloud_visitors" data-flag-title="Scrapy爬虫系列之一个整站爬取">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote class="blockquote-center"><br>本节是<a href="http://kba977.github.io/categories/Scrapy%E7%88%AC%E8%99%AB%E7%B3%BB%E5%88%97/">Scrapy系列</a>中的一节, 主要是<strong>多页面</strong>, <strong>多Item</strong>和 <strong>图片下载</strong>功能的爬取。<br></blockquote>
+
+
+<p>本次我们要爬取的站是我个人非常喜欢的一个站点， 即韩寒的<a href="http://caodan.org" target="_blank" rel="noopener">一个</a>, 每天会更新一张图片, 一句话, 一篇文章和一个问答, 页面十分简洁。如下图所示:</p>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/1_一张图片.jpg" alt></p>
+<a id="more"></a>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/2_一篇文章.jpg" alt><br><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/3_一个回答.jpg" alt></p>
+<h1 id="1-定义爬虫内容-item-py"><a href="#1-定义爬虫内容-item-py" class="headerlink" title="1. 定义爬虫内容 item.py"></a>1. 定义爬虫内容 item.py</h1><p>首先定义我们感兴趣的内容, 按照 <strong>photo</strong>, <strong>article</strong>, <strong>ask</strong> 分别爬取。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PhotoItem</span><span class="params">(scrapy.Item)</span>:</span></span><br><span class="line">    title = scrapy.Field()</span><br><span class="line">    image_urls = scrapy.Field()</span><br><span class="line">    date = scrapy.Field()</span><br><span class="line">    motto = scrapy.Field()</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArticleItem</span><span class="params">(scrapy.Item)</span>:</span></span><br><span class="line">    title = scrapy.Field()</span><br><span class="line">    content = scrapy.Field()</span><br><span class="line">    date = scrapy.Field()</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AskItem</span><span class="params">(scrapy.Item)</span>:</span></span><br><span class="line">    title = scrapy.Field()</span><br><span class="line">    date = scrapy.Field()</span><br><span class="line">    question = scrapy.Field()</span><br><span class="line">    answer = scrapy.Field()</span><br></pre></td></tr></table></figure>
+<h1 id="2-Spider的编写"><a href="#2-Spider的编写" class="headerlink" title="2. Spider的编写"></a>2. Spider的编写</h1><p>定义好了 Item, 那么接下来就是我们的 Spider了, 整个逻辑非常简单, 首先解析每天的页面(主页面), 再由主页面分别获得 <strong>photo</strong>, <strong>article</strong> 和 <strong>ask</strong>的链接, 再发起请求来获得分别的详情页面。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> Spider</span><br><span class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</span><br><span class="line"><span class="keyword">from</span> OnesSpider.items <span class="keyword">import</span> PhotoItem, ArticleItem, AskItem</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(Spider)</span>:</span></span><br><span class="line">    name = <span class="string">"ones"</span></span><br><span class="line">    allowed_domains = [<span class="string">"caodan.org"</span>]</span><br><span class="line">    start_urls = [</span><br><span class="line">        <span class="string">"http://caodan.org/page/%d"</span> % i <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>, <span class="number">1340</span>)</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        html = Selector(response).xpath(<span class="string">"//div[@class='content']/h1[@class='entry-title']/a/@href"</span>).extract()</span><br><span class="line">        <span class="comment"># html 为列表, 其中有3个元素, 分别是 photo, article, ask 页面的链接</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">## 请求图片详情页</span></span><br><span class="line">        <span class="keyword">yield</span> scrapy.Request(</span><br><span class="line">            url = html[<span class="number">0</span>],</span><br><span class="line">            callback = self.parse_photo</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment">## 请求文章详情页</span></span><br><span class="line">        <span class="keyword">yield</span> scrapy.Request(</span><br><span class="line">            url = html[<span class="number">1</span>],</span><br><span class="line">            callback = self.parse_article</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment">## 请求问题详情页</span></span><br><span class="line">        <span class="keyword">yield</span> scrapy.Request(</span><br><span class="line">            url = html[<span class="number">2</span>],</span><br><span class="line">            callback = self.parse_ask</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_photo</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        sel = Selector(response)</span><br><span class="line"></span><br><span class="line">        item = PhotoItem()</span><br><span class="line">        item[<span class="string">'title'</span>] = sel.xpath(<span class="string">'//h1/text()'</span>).extract()[<span class="number">0</span>]</span><br><span class="line">        item[<span class="string">'date'</span>] = sel.xpath(<span class="string">'//div[@class="date"]//p'</span>).xpath(<span class="string">"string(.)"</span>).extract()[<span class="number">0</span>]</span><br><span class="line">        item[<span class="string">'image_urls'</span>] = sel.xpath(<span class="string">'//div[@class="entry-content"]//img/@src'</span>).extract()</span><br><span class="line">        item[<span class="string">'motto'</span>] = sel.xpath(<span class="string">'//blockquote/p/text()'</span>).extract()[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">yield</span> item</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_article</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        sel = Selector(response)</span><br><span class="line"></span><br><span class="line">        item = ArticleItem()</span><br><span class="line">        item[<span class="string">'title'</span>] = sel.xpath(<span class="string">'//h1/text()'</span>).extract()[<span class="number">0</span>]</span><br><span class="line">        item[<span class="string">'date'</span>] = sel.xpath(<span class="string">'//div[@class="date"]//p'</span>).xpath(<span class="string">"string(.)"</span>).extract()[<span class="number">0</span>]</span><br><span class="line">        item[<span class="string">'content'</span>] = sel.xpath(<span class="string">'//div[@class="entry-content"]'</span>).xpath(<span class="string">"string(.)"</span>).extract()[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">yield</span> item</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_ask</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        sel = Selector(response)</span><br><span class="line"></span><br><span class="line">        item = AskItem()</span><br><span class="line">        item[<span class="string">'title'</span>] = sel.xpath(<span class="string">'//h1/text()'</span>).extract()[<span class="number">0</span>]</span><br><span class="line">        item[<span class="string">'date'</span>] = sel.xpath(<span class="string">'//div[@class="date"]//p'</span>).xpath(<span class="string">"string(.)"</span>).extract()[<span class="number">0</span>]</span><br><span class="line">        item[<span class="string">'question'</span>] = sel.xpath(<span class="string">'//div[@class="cuestion-contenido"]/text()'</span>).extract()[<span class="number">0</span>]</span><br><span class="line">        item[<span class="string">'answer'</span>] = sel.xpath(<span class="string">'//div[@class="cuestion-contenido"]'</span>)[<span class="number">1</span>].xpath(<span class="string">"string(.)"</span>).extract()[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">yield</span> item</span><br></pre></td></tr></table></figure>
+<h1 id="3-数据处理-pipeline-py"><a href="#3-数据处理-pipeline-py" class="headerlink" title="3. 数据处理 pipeline.py"></a>3. 数据处理 pipeline.py</h1><p>这里我们主要有三个Pipeline, 其中一个是 Scrapy 自带的下来图片的 Pipeline, 还有两个分别是处理爬取到的item中时间格式的和将输入存入 mongo 数据库的 Pipeline。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pymongo</span><br><span class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</span><br><span class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> OnesSpider.items <span class="keyword">import</span> PhotoItem, ArticleItem, AskItem</span><br><span class="line"><span class="keyword">from</span> scrapy.contrib.pipeline.images <span class="keyword">import</span> ImagesPipeline</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DateFormatPipeline</span><span class="params">(object)</span>:</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></span><br><span class="line">        a = item[<span class="string">'date'</span>].replace(<span class="string">u'月'</span>,<span class="string">''</span>)</span><br><span class="line">        tmp = a[:<span class="number">2</span>] + <span class="string">'/'</span> + a[<span class="number">2</span>:]</span><br><span class="line">        day = tmp.split(<span class="string">'/'</span>)[<span class="number">0</span>].strip()</span><br><span class="line">        month = tmp.split(<span class="string">'/'</span>)[<span class="number">1</span>].strip()</span><br><span class="line">        year = tmp.split(<span class="string">'/'</span>)[<span class="number">2</span>].strip()</span><br><span class="line">        item[<span class="string">'date'</span>] = year+<span class="string">'/'</span>+month+<span class="string">'/'</span>+day</span><br><span class="line">        <span class="keyword">return</span> item</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBPipeline</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.connection = pymongo.MongoClient(</span><br><span class="line">            settings[<span class="string">'MONGODB_SERVER'</span>],</span><br><span class="line">            settings[<span class="string">'MONGODB_PORT'</span>]</span><br><span class="line">        )</span><br><span class="line">        self.db = self.connection[settings[<span class="string">'MONGODB_DB'</span>]]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></span><br><span class="line">        vaild = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> item:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">                vaild = <span class="keyword">False</span></span><br><span class="line">                <span class="keyword">raise</span> DropItem(<span class="string">"Missing &#123;0&#125;!"</span>.format(data))</span><br><span class="line">        <span class="keyword">if</span> vaild:</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> isinstance(item, PhotoItem):</span><br><span class="line">                self.collection = self.db[<span class="string">'photo'</span>]</span><br><span class="line">                self.collection.insert(dict(item))</span><br><span class="line">            <span class="keyword">elif</span> isinstance(item, ArticleItem):</span><br><span class="line">                self.collection = self.db[<span class="string">'article'</span>]</span><br><span class="line">                self.collection.insert(dict(item))</span><br><span class="line">            <span class="keyword">elif</span> isinstance(item, AskItem):</span><br><span class="line">                self.collection = self.db[<span class="string">'ask'</span>]</span><br><span class="line">                self.collection.insert(dict(item))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">raise</span> DropItem(<span class="string">"Error"</span>)</span><br><span class="line">        <span class="keyword">return</span> item</span><br></pre></td></tr></table></figure>
+<h1 id="4-配置文件-settings-py"><a href="#4-配置文件-settings-py" class="headerlink" title="4. 配置文件 settings.py"></a>4. 配置文件 settings.py</h1><p>最后, 我们需要在 setting 中做以下配置, mongodb的数据库等信息, 图片下载保存地址 和 Pipeline 优先级</p>
+<p>添加以下设置到<code>settting.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">MONGODB_SERVER = <span class="string">"localhost"</span></span><br><span class="line">MONGODB_PORT = <span class="number">27017</span></span><br><span class="line">MONGODB_DB = <span class="string">"ones"</span></span><br><span class="line"></span><br><span class="line">ITEM_PIPELINES = &#123;</span><br><span class="line">   <span class="string">'OnesSpider.pipelines.ImagesPipeline'</span>: <span class="number">100</span>,</span><br><span class="line">   <span class="string">'OnesSpider.pipelines.DateFormatPipeline'</span>: <span class="number">200</span>,</span><br><span class="line">   <span class="string">'OnesSpider.pipelines.MongoDBPipeline'</span>: <span class="number">300</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">IMAGES_STORE = <span class="string">'.'</span></span><br></pre></td></tr></table></figure>
+<h1 id="5-效果展示"><a href="#5-效果展示" class="headerlink" title="5. 效果展示"></a>5. 效果展示</h1><p>最后在工程目录下执行命令</p>
+<pre><code>scrapy crawl ones
+</code></pre><p>大约等待一个小时左右, 整个站的数据应该都被爬取完成咯。数据量大概是 photo, article, ask各有1350个左右。</p>
+<p>如下图:</p>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/4_数据入库.jpg" alt></p>
+<p>同时下载的图片(妈妈再也不怕我找不到精美图片了)</p>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Scrapy爬虫系列之一个整站爬取/5_效果图.jpg" alt></p>
+<p>项目代码, <a href="https://github.com/kba977/Scrapy_Projects" target="_blank" rel="noopener">点我</a>下载。</p>
+<p>以上, 欢迎食用~ , 觉得有收获, 留个言给点鼓励嘛!!! ᕙ(⇀‸↼‵‵)ᕗ</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/25/Python/Python数据可视化/" rel="next" title="Python数据可视化">
+                <i class="fa fa-chevron-left"></i> Python数据可视化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/14/工具/NetCat学习笔记/" rel="prev" title="NetCat学习笔记">
+                NetCat学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/profile.jpg" alt="kba977">
+          <p class="site-author-name" itemprop="name">kba977</p>
+           
+              <p class="site-description motion-element" itemprop="description">什么都略懂一点, 生活更精彩一些</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100004387297679" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook-official"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/kba977" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kba977" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1582389907" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:kba977@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://luowenhui.blog.51cto.com" title="兔兔西的Blog" target="_blank">兔兔西的Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.brucezhou.com" title="夜殇的小站" target="_blank">夜殇的小站</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.libinx.com" title="Thinking Realm" target="_blank">Thinking Realm</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-定义爬虫内容-item-py"><span class="nav-text">1. 定义爬虫内容 item.py</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Spider的编写"><span class="nav-text">2. Spider的编写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-数据处理-pipeline-py"><span class="nav-text">3. 数据处理 pipeline.py</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-配置文件-settings-py"><span class="nav-text">4. 配置文件 settings.py</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-效果展示"><span class="nav-text">5. 效果展示</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kba977</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://kba977-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://kba977.github.io/2016/06/09/Scrapy爬虫系列/Scrapy爬虫系列之一个整站爬取/';
+          this.page.identifier = '2016/06/09/Scrapy爬虫系列/Scrapy爬虫系列之一个整站爬取/';
+          this.page.title = 'Scrapy爬虫系列之一个整站爬取';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kba977-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("V9V704cXk4rzl0xmvcaoxXj6-gzGzoHsz", "l6sfaXh824aQ75iwbUwla8ry");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
