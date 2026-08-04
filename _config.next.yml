@@ -85,9 +85,10 @@ disqus:
   shortname: kba977-github-io
   count: true
 
-# Visitor counter
+# Visitor counter — disabled: the 2016-era LeanCloud app no longer works
+# (LeanCloud now requires a bound custom API domain / serverURLs)
 leancloud_visitors:
-  enable: true
+  enable: false
   security: false
   app_id: V9V704cXk4rzl0xmvcaoxXj6-gzGzoHsz
   app_key: l6sfaXh824aQ75iwbUwla8ry
