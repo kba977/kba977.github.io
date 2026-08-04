@@ -1,0 +1,93 @@
+# NexT theme configuration (ported from themes/NexT 5.1.0 _config.yml)
+# Docs: https://theme-next.js.org/docs/
+
+scheme: Muse
+
+favicon:
+  small: /favicon.ico
+  medium: /favicon.ico
+
+menu:
+  home: / || fa fa-home
+  archives: /archives/ || fa fa-archive
+  categories: /categories/ || fa fa-th
+  tags: /tags/ || fa fa-tags
+  about: /about/ || fa fa-user
+
+avatar:
+  url: /images/profile.jpg
+
+sidebar:
+  position: left
+  display: hide
+
+social:
+  GitHub: https://github.com/kba977 || fab fa-github
+  Twitter: https://twitter.com/kba977 || fab fa-twitter
+  Facebook: https://www.facebook.com/profile.php?id=100004387297679 || fab fa-facebook
+  Weibo: http://weibo.com/u/1582389907 || fab fa-weibo
+  E-Mail: mailto:kba977@gmail.com || fa fa-envelope
+
+toc:
+  enable: true
+  number: false
+
+links_settings:
+  icon: fa fa-globe
+  title: 友情链接
+  layout: inline
+
+links:
+  MacTalk: http://macshuo.com
+  兔兔西的Blog: http://luowenhui.blog.51cto.com
+  夜殇的小站: http://www.brucezhou.com
+  Thinking Realm: https://www.libinx.com
+
+footer:
+  since: 2015
+  icon:
+    name: fa fa-heart
+    animated: true
+    color: "#ff0000"
+
+post_meta:
+  item_text: true
+  created_at: true
+  updated_at:
+    enable: false
+  categories: true
+
+excerpt_description: true
+read_more_btn: true
+
+font:
+  enable: true
+  host:
+  global:
+    external: true
+    family: Monda
+  title:
+    external: true
+    family: Lobster Two
+  headings:
+    external: true
+    family: Roboto Slab
+  posts:
+    external: true
+    family:
+  codes:
+    external: true
+    family: PT Mono
+
+# Comments
+disqus:
+  enable: true
+  shortname: kba977-github-io
+  count: true
+
+# Visitor counter
+leancloud_visitors:
+  enable: true
+  security: false
+  app_id: V9V704cXk4rzl0xmvcaoxXj6-gzGzoHsz
+  app_key: l6sfaXh824aQ75iwbUwla8ry
