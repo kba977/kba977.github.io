@@ -76,9 +76,3 @@ font:
   codes:
     external: true
     family: PT Mono
-
-# Comments
-disqus:
-  enable: true
-  shortname: kba977-github-io
-  count: true
