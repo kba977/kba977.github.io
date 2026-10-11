@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Monda:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lobster+Two:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Slab:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=PT+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kba977.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="NetCat，在网络工具中有“瑞士军刀”美誉，其有Windows和Linux的版本。因为它短小精悍（1.84版本也不过25k，旧版本或缩减版甚至更小）、功能实用，被设计为一个简单、可靠的网络工具，可通过TCP或UDP协议传输读写数据。同时，它还是一个网络应用Debug分析器，因为它可以根据需要创建各种不同类型的网络连接。   版本参数简介语 法: nc [-hlnruz][-g&lt;网关...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NetCat学习笔记">
+<meta property="og:url" content="https://kba977.github.io/2016/07/14/%E5%B7%A5%E5%85%B7/NetCat%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="kba977の空想庭院">
+<meta property="og:description" content="NetCat，在网络工具中有“瑞士军刀”美誉，其有Windows和Linux的版本。因为它短小精悍（1.84版本也不过25k，旧版本或缩减版甚至更小）、功能实用，被设计为一个简单、可靠的网络工具，可通过TCP或UDP协议传输读写数据。同时，它还是一个网络应用Debug分析器，因为它可以根据需要创建各种不同类型的网络连接。   版本参数简介语 法: nc [-hlnruz][-g&lt;网关...">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-07-14T01:45:51.000Z">
+<meta property="article:modified_time" content="2026-10-11T07:15:02.516Z">
+<meta property="article:author" content="kba977">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kba977.github.io/2016/07/14/%E5%B7%A5%E5%85%B7/NetCat%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kba977.github.io/2016/07/14/%E5%B7%A5%E5%85%B7/NetCat%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/","path":"2016/07/14/工具/NetCat学习笔记/","title":"NetCat学习笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>NetCat学习笔记 | kba977の空想庭院</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">kba977の空想庭院</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E5%8F%82%E6%95%B0%E7%AE%80%E4%BB%8B"><span class="nav-text">版本参数简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="nav-text">常用功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BB%BA%E7%AB%8BSocket"><span class="nav-text">1. 建立Socket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81"><span class="nav-text">2. 数据传送</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F"><span class="nav-text">3. 端口扫描</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="kba977"
+      src="/images/profile.jpg">
+  <p class="site-author-name" itemprop="name">kba977</p>
+  <div class="site-description" itemprop="description">什么都略懂一点, 生活更精彩一些</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kba977" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kba977" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/kba977" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;kba977" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100004387297679" title="Facebook → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100004387297679" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i>Facebook</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/u/1582389907" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1582389907" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kba977@gmail.com" title="E-Mail → mailto:kba977@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://macshuo.com/" title="http:&#x2F;&#x2F;macshuo.com" rel="noopener" target="_blank">MacTalk</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://luowenhui.blog.51cto.com/" title="http:&#x2F;&#x2F;luowenhui.blog.51cto.com" rel="noopener" target="_blank">兔兔西的Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://www.brucezhou.com/" title="http:&#x2F;&#x2F;www.brucezhou.com" rel="noopener" target="_blank">夜殇的小站</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.libinx.com/" title="https:&#x2F;&#x2F;www.libinx.com" rel="noopener" target="_blank">Thinking Realm</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kba977.github.io/2016/07/14/%E5%B7%A5%E5%85%B7/NetCat%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.jpg">
+      <meta itemprop="name" content="kba977">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kba977の空想庭院">
+      <meta itemprop="description" content="什么都略懂一点, 生活更精彩一些">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="NetCat学习笔记 | kba977の空想庭院">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NetCat学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-07-14 09:45:51" itemprop="dateCreated datePublished" datetime="2016-07-14T09:45:51+08:00">2016-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2016/07/14/%E5%B7%A5%E5%85%B7/NetCat%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/14/工具/NetCat学习笔记/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote class="blockquote-center">
+NetCat，在网络工具中有“瑞士军刀”美誉，其有Windows和Linux的版本。因为它短小精悍（1.84版本也不过25k，旧版本或缩减版甚至更小）、功能实用，被设计为一个简单、可靠的网络工具，可通过TCP或UDP协议传输读写数据。同时，它还是一个网络应用Debug分析器，因为它可以根据需要创建各种不同类型的网络连接。
+</blockquote>
+
+<h2 id="版本参数简介"><a href="#版本参数简介" class="headerlink" title="版本参数简介"></a>版本参数简介</h2><pre><code>语 法: nc [-hlnruz][-g&lt;网关...&gt;][-G&lt;指向器数目&gt;][-i&lt;延迟秒数&gt;][-o&lt;输出文件&gt;][-p&lt;通信端口&gt;][-s&lt;来源地址&gt;][-v...][-w&lt;超时秒数&gt;][主机名称][通信端口...]
+</code></pre>
+<p>补充说明：执行本指令可设置路由器的相关参数。</p>
+<span id="more"></span>
+
+<p>参 数:  </p>
+<pre><code>-g&lt;网关&gt; 设置路由器跃程通信网关，最多可设置8个。
+-G&lt;指向器数目&gt; 设置来源路由指向器，其数值为4的倍数。
+-h 在线帮助。
+-i&lt;延迟秒数&gt; 设置时间间隔，以便传送信息及扫描通信端口。
+-l 使用监听模式，管控传入的资料。
+-n 直接使用IP地址，而不通过域名服务器。
+-o&lt;输出文件&gt; 指定文件名称，把往来传输的数据以16进制字码倾倒成该文件保存。
+-p&lt;通信端口&gt; 设置本地主机使用的通信端口。
+-r 乱数指定本地与远端主机的通信端口。
+-s&lt;来源地址&gt; 设置本地主机送出数据包的IP地址。
+-u 使用UDP传输协议。
+-v 显示指令执行过程, -vv 显示更加详细的过程。
+-w&lt;超时秒数&gt; 设置等待连线的时间。
+-z 使用0输入/输出模式，只在扫描通信端口时使用。
+</code></pre>
+<h2 id="常用功能"><a href="#常用功能" class="headerlink" title="常用功能"></a>常用功能</h2><h3 id="1-建立Socket"><a href="#1-建立Socket" class="headerlink" title="1. 建立Socket"></a>1. 建立Socket</h3><p>首先在server1 中监听自己本地的 1234 端口</p>
+<pre><code>[root@server1 ~]# nc -l 1234   
+</code></pre>
+<p>然后在server2 上执行下面命令连接server1 的 1234 的端口</p>
+<pre><code>[root@server2 ~]# nc server1的ip 1234
+</code></pre>
+<h3 id="2-数据传送"><a href="#2-数据传送" class="headerlink" title="2. 数据传送"></a>2. 数据传送</h3><p>假如我们想要在 serverA 和 serverB 两台主机之间传文件, 这里以A主机向B主机传送<code>data.txt</code>文件为例:   </p>
+<p>首先在 serverB 主机上执行命令:</p>
+<pre><code>[root@serverB ~]# nc -l 1000(任意未使用端口) &gt; data.txt 
+</code></pre>
+<p>即监听1000端口, 并将数据流重定向到<code>data.txt</code> 文件中</p>
+<p>然后在 serverserverA 主机上执行命令: </p>
+<pre><code>[root@serverA ~]# nc B主机ip 1000(任意未使用端口) &lt; data.txt
+</code></pre>
+<h3 id="3-端口扫描"><a href="#3-端口扫描" class="headerlink" title="3. 端口扫描"></a>3. 端口扫描</h3><p>我们还可以使用 nc 的端口扫描功能, 来探测某一主机的端口开放情况, 如下面命令的功能为扫描 <code>192.168.200.29</code> 主机的 20 到 30 端口, <code>-v</code> 表示显示执行结果, <code>-w 1</code> 表示超过1秒后重连, <code>-z</code> 指定端口。</p>
+<pre><code>[root@backup ~]# nc -v -w 1 192.168.200.29 -z 20-30
+</code></pre>
+<hr>
+<pre><code>nc: connect to 192.168.200.29 port 20 (tcp) failed: Connection refused
+nc: connect to 192.168.200.29 port 21 (tcp) failed: Connection refused
+Connection to 192.168.200.29 22 port [tcp/ssh] succeeded!
+nc: connect to 192.168.200.29 port 23 (tcp) failed: Connection refused
+nc: connect to 192.168.200.29 port 24 (tcp) failed: Connection refused
+nc: connect to 192.168.200.29 port 25 (tcp) failed: Connection refused
+nc: connect to 192.168.200.29 port 26 (tcp) failed: Connection refused
+nc: connect to 192.168.200.29 port 27 (tcp) failed: Connection refused
+nc: connect to 192.168.200.29 port 28 (tcp) failed: Connection refused
+nc: connect to 192.168.200.29 port 29 (tcp) failed: Connection refused
+nc: connect to 192.168.200.29 port 30 (tcp) failed: Connection refused
+</code></pre>
+<p>未完待续…</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag"># 工具</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/06/09/Scrapy%E7%88%AC%E8%99%AB%E7%B3%BB%E5%88%97/Scrapy%E7%88%AC%E8%99%AB%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E4%B8%AA%E6%95%B4%E7%AB%99%E7%88%AC%E5%8F%96/" rel="prev" title="Scrapy爬虫系列之一个整站爬取">
+                  <i class="fa fa-angle-left"></i> Scrapy爬虫系列之一个整站爬取
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/07/15/%E5%B7%A5%E5%85%B7/Crontab%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" rel="next" title="Crontab定时任务">
+                  Crontab定时任务 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2015 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">kba977</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"kba977-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Monda:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lobster+Two:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Slab:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=PT+Mono:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kba977.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="基础用python的matplotlib模块画最简单的折线图, 及在图中添加文字和图例 12345import matplotlib.pyplot as pltplt.plot([1,3,2,4])plt.ylabel(&#x27;some number&#x27;)plt.show()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python数据可视化">
+<meta property="og:url" content="https://kba977.github.io/2016/05/25/Python/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/index.html">
+<meta property="og:site_name" content="kba977の空想庭院">
+<meta property="og:description" content="基础用python的matplotlib模块画最简单的折线图, 及在图中添加文字和图例 12345import matplotlib.pyplot as pltplt.plot([1,3,2,4])plt.ylabel(&#x27;some number&#x27;)plt.show()">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/1_%E6%8A%98%E7%BA%BF%E5%9B%BE.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/2_X%E8%BD%B4%E5%92%8CY%E8%BD%B4.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/3_%E7%BA%A2%E8%89%B2%E5%9C%86%E7%82%B9.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/4_%E5%A4%9A%E7%BB%B4%E5%90%91%E9%87%8F.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/5_%E8%AE%BE%E7%BD%AE%E7%BA%BF%E5%AE%BD.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/6_%E6%B6%88%E9%99%A4%E9%94%AF%E9%BD%BF.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/7_setp.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/8_%E4%BF%AE%E6%94%B9%E5%9D%90%E6%A0%87%E8%8C%83%E5%9B%B4.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/9_%E5%88%9B%E5%BB%BA%E5%AD%90%E5%9B%BE1.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/10_%E5%88%9B%E5%BB%BA%E5%AD%90%E5%9B%BE2.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/11_%E5%88%9B%E5%BB%BA%E5%AD%90%E5%9B%BE3.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/12_%E4%BD%BF%E7%94%A8text%E6%B7%BB%E5%8A%A0%E6%96%87%E5%AD%971.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/13_%E4%BD%BF%E7%94%A8text%E6%B7%BB%E5%8A%A0%E6%96%87%E5%AD%972.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/14_%E6%B3%A8%E9%87%8A%E6%96%87%E6%9C%AC1.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/15_%E6%B3%A8%E9%87%8A%E6%96%87%E6%9C%AC2.jpg">
+<meta property="og:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/16_%E6%B3%A8%E9%87%8A%E6%96%87%E6%9C%AC3.jpg">
+<meta property="article:published_time" content="2016-05-25T04:02:33.000Z">
+<meta property="article:modified_time" content="2026-10-11T07:15:02.514Z">
+<meta property="article:author" content="kba977">
+<meta property="article:tag" content="数据可视化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/1_%E6%8A%98%E7%BA%BF%E5%9B%BE.jpg">
+
+
+<link rel="canonical" href="https://kba977.github.io/2016/05/25/Python/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kba977.github.io/2016/05/25/Python/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/","path":"2016/05/25/Python/Python数据可视化/","title":"Python数据可视化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Python数据可视化 | kba977の空想庭院</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">kba977の空想庭院</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-text">基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%9D%90%E6%A0%87%E8%8C%83%E5%9B%B4"><span class="nav-text">修改坐标范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%90%E5%9B%BE"><span class="nav-text">创建子图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8text%E6%B7%BB%E5%8A%A0%E6%96%87%E5%AD%97"><span class="nav-text">使用text添加文字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A%E6%96%87%E6%9C%AC"><span class="nav-text">注释文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%9B%BE%E4%BE%8B"><span class="nav-text">添加图例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E4%BE%8B%E9%A1%B9"><span class="nav-text">图例项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E4%BE%8B%E6%A0%87%E7%AD%BE"><span class="nav-text">图例标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E4%BE%8B%E8%AF%B4%E6%98%8E"><span class="nav-text">图例说明</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="kba977"
+      src="/images/profile.jpg">
+  <p class="site-author-name" itemprop="name">kba977</p>
+  <div class="site-description" itemprop="description">什么都略懂一点, 生活更精彩一些</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kba977" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kba977" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/kba977" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;kba977" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100004387297679" title="Facebook → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100004387297679" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i>Facebook</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/u/1582389907" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1582389907" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kba977@gmail.com" title="E-Mail → mailto:kba977@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://macshuo.com/" title="http:&#x2F;&#x2F;macshuo.com" rel="noopener" target="_blank">MacTalk</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://luowenhui.blog.51cto.com/" title="http:&#x2F;&#x2F;luowenhui.blog.51cto.com" rel="noopener" target="_blank">兔兔西的Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://www.brucezhou.com/" title="http:&#x2F;&#x2F;www.brucezhou.com" rel="noopener" target="_blank">夜殇的小站</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.libinx.com/" title="https:&#x2F;&#x2F;www.libinx.com" rel="noopener" target="_blank">Thinking Realm</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kba977.github.io/2016/05/25/Python/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.jpg">
+      <meta itemprop="name" content="kba977">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kba977の空想庭院">
+      <meta itemprop="description" content="什么都略懂一点, 生活更精彩一些">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Python数据可视化 | kba977の空想庭院">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python数据可视化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-05-25 12:02:33" itemprop="dateCreated datePublished" datetime="2016-05-25T12:02:33+08:00">2016-05-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2016/05/25/Python/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/05/25/Python/Python数据可视化/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>用python的matplotlib模块画最简单的折线图, 及在图中添加文字和图例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.plot([<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>])</span><br><span class="line">plt.ylabel(<span class="string">&#x27;some number&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/1_%E6%8A%98%E7%BA%BF%E5%9B%BE.jpg"></p>
+<span id="more"></span>
+
+<p>其中如果你向<code>plot()</code>指令提供了<strong>一维的数组或列表</strong>, 那么matplotlib将<strong>默认</strong>它是一系列的<strong>y</strong>值, 并<strong>自动</strong>为你生成x的值。</p>
+<p>plot()一个通用的命令, 可以输入任意多的参数。例如, 画y和x的关系，你可以使用如下指令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], [<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/2_X%E8%BD%B4%E5%92%8CY%E8%BD%B4.jpg"></p>
+<p>对于每对x,y参数, 都可以加上一个可选的第三参数, 控制画图中的<strong>颜色</strong>和<strong>线型</strong>。<br>控制字符的字母与matlab是统一的，并且颜色控制和线型控制可以叠加。默认的控制字符串是’b-‘，是<strong>蓝色实线</strong>。假如，你想画红色圆点，你可以通过以下指令来实现:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], [<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>], <span class="string">&#x27;ro&#x27;</span>)</span><br><span class="line">plt.axis([<span class="number">0</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">20</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/3_%E7%BA%A2%E8%89%B2%E5%9C%86%E7%82%B9.jpg"></p>
+<p>上面例子里的axis()命令给定了坐标范围, 格式是[xmin, xmax, ymin, ymax], 上图表示x轴从0-6, y轴从0-20。</p>
+<p>实际上，matplotlib不仅可以用于画向量，还可以用于画多维数据数组。下面，我们将演示用一条指令画多条不同格式的线。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成一组排列, 从 0.0 到 5.0 间隔 0.2</span></span><br><span class="line">t = np.arange(<span class="number">0.</span>, <span class="number">5.</span>, <span class="number">0.2</span>)</span><br><span class="line"><span class="comment"># t = array([ 0., 0.2, 0.4, ..., 4.6,  4.8])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 红色虚线, 蓝色方块, 绿色上三角</span></span><br><span class="line">plt.plot(t, t, <span class="string">&#x27;r--&#x27;</span>, t, t**<span class="number">2</span>, <span class="string">&#x27;bs&#x27;</span>, t, t**<span class="number">3</span>, <span class="string">&#x27;g^&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/4_%E5%A4%9A%E7%BB%B4%E5%90%91%E9%87%8F.jpg"></p>
+<p>我们可以通过<code>linewidth</code>来设置线宽</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], [<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>],linewidth=<span class="number">2.0</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/5_%E8%AE%BE%E7%BD%AE%E7%BA%BF%E5%AE%BD.jpg"></p>
+<p>通过设定<code>set_antialiased</code>来确定是否消除锯齿</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">line, = plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], [<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>], <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">line.set_antialiased(<span class="literal">False</span>) <span class="comment"># 关闭反锯齿</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/6_%E6%B6%88%E9%99%A4%E9%94%AF%E9%BD%BF.jpg"></p>
+<p>我们也可以用lines &#x3D; plot(x1,y1,x2,y2)来画两条线。可以使用<code>setp()</code>命令，可以像MATLAB一样设置几条线的性质。 setp可以使用python 关键词，也可用MATLAB格式的字符串。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">lines = plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], [<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>], [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], [<span class="number">16</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">2</span>])</span><br><span class="line"><span class="comment"># use keyword args</span></span><br><span class="line">plt.setp(lines, color=<span class="string">&#x27;r&#x27;</span>, linewidth=<span class="number">2.0</span>)</span><br><span class="line"><span class="comment"># or MATLAB style string value pairs</span></span><br><span class="line">plt.setp(lines, <span class="string">&#x27;color&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, <span class="string">&#x27;linewidth&#x27;</span>, <span class="number">2.0</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/7_setp.jpg"></p>
+<h3 id="修改坐标范围"><a href="#修改坐标范围" class="headerlink" title="修改坐标范围"></a>修改坐标范围</h3><p>默认情况下, 坐标轴的最小值和最大值与输入数据的最小、最大值一致。也就是说, 默认情况下整个图形都能显示在所画图片上<br>有时候我们更关注其中的一些点, 这时, 我们可以通过<code>xlim(xmin, xmax)</code>和<code>ylim(ymin, ymax)</code>来调整 <strong>x</strong>, <strong>y</strong> 坐标范围, 见下图</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">x = np.arange(-<span class="number">5.0</span>, <span class="number">5.0</span>, <span class="number">0.02</span>)</span><br><span class="line">y1 = np.sin(x)</span><br><span class="line"></span><br><span class="line">plt.figure(<span class="number">1</span>)</span><br><span class="line">plt.subplot(<span class="number">211</span>)</span><br><span class="line">plt.plot(x, y1)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">212</span>)</span><br><span class="line"><span class="comment"># 设置x轴范围</span></span><br><span class="line">xlim(-<span class="number">2.5</span>, <span class="number">2.5</span>)</span><br><span class="line"><span class="comment"># 设置y轴范围</span></span><br><span class="line">ylim(-<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">plt.plot(x, y1)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/8_%E4%BF%AE%E6%94%B9%E5%9D%90%E6%A0%87%E8%8C%83%E5%9B%B4.jpg"></p>
+<h3 id="创建子图"><a href="#创建子图" class="headerlink" title="创建子图"></a>创建子图</h3><p>你可以通过<code>plt.figure</code>创建一张新的图，<code>plt.subplot</code>来创建子图。<code>subplot()</code>指令包含<code>numrows</code>(行数), <code>numcols</code>(列数), <code>fignum</code>(图像编号)，其中图像编号的范围是从1到行数 * 列数。在行数 * 列数&lt;10时，数字间的逗号可以省略。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">t</span>):</span><br><span class="line">    <span class="keyword">return</span> np.exp(-t) * np.cos(<span class="number">2</span>*np.pi*t)</span><br><span class="line"></span><br><span class="line">t1 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</span><br><span class="line">t2 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.02</span>)</span><br><span class="line"></span><br><span class="line">plt.figure(<span class="number">1</span>)</span><br><span class="line">plt.subplot(<span class="number">211</span>)</span><br><span class="line">plt.plot(t1, f(t1), <span class="string">&#x27;bo&#x27;</span>, t2, f(t2), <span class="string">&#x27;k&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">212</span>)</span><br><span class="line">plt.plot(t2, np.cos(<span class="number">2</span>*np.pi*t2), <span class="string">&#x27;r--&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/9_%E5%88%9B%E5%BB%BA%E5%AD%90%E5%9B%BE1.jpg"></p>
+<p>你可以多次使用figure命令来产生多个图，其中，图片号按顺序增加。这里，要注意一个概念当前图和当前坐标。所有绘图操作仅对当前图和当前坐标有效。通常，你并不需要考虑这些事，下面的这个例子为大家演示这一细节。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.figure(<span class="number">1</span>)                <span class="comment"># 第一张图</span></span><br><span class="line">plt.subplot(<span class="number">211</span>)             <span class="comment"># 第一张图中的第一张子图</span></span><br><span class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">plt.subplot(<span class="number">212</span>)             <span class="comment"># 第一张图中的第二张子图</span></span><br><span class="line">plt.plot([<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plt.figure(<span class="number">2</span>)                <span class="comment"># 第二张图</span></span><br><span class="line">plt.plot([<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])            <span class="comment"># 默认创建子图subplot(111)</span></span><br><span class="line"></span><br><span class="line">plt.figure(<span class="number">1</span>)                <span class="comment"># 切换到figure 1 ; 子图subplot(212)仍旧是当前图</span></span><br><span class="line">plt.subplot(<span class="number">211</span>)             <span class="comment"># 令子图subplot(211)成为figure1的当前图</span></span><br><span class="line">plt.title(<span class="string">&#x27;Easy as 1,2,3&#x27;</span>)   <span class="comment"># 添加subplot 211 的标题</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/10_%E5%88%9B%E5%BB%BA%E5%AD%90%E5%9B%BE2.jpg"><br><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/11_%E5%88%9B%E5%BB%BA%E5%AD%90%E5%9B%BE3.jpg"></p>
+<h3 id="使用text添加文字"><a href="#使用text添加文字" class="headerlink" title="使用text添加文字"></a>使用text添加文字</h3><ul>
+<li><code>text()</code>可以在图中的任意位置添加文字，并支持LaTex语法</li>
+<li><code>xlable()</code>, <code>ylable()</code>用于添加x轴和y轴标签</li>
+<li><code>title()</code>用于添加图的题目</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">mu, sigma = <span class="number">100</span>, <span class="number">15</span></span><br><span class="line">x = mu + sigma * np.random.randn(<span class="number">10000</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据的直方图</span></span><br><span class="line">n, bins, patches = plt.hist(x, <span class="number">50</span>, normed=<span class="number">1</span>, facecolor=<span class="string">&#x27;g&#x27;</span>, alpha=<span class="number">0.75</span>)</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">&#x27;Smarts&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Probability&#x27;</span>)</span><br><span class="line"><span class="comment">#添加标题</span></span><br><span class="line">plt.title(<span class="string">&#x27;Histogram of IQ&#x27;</span>)</span><br><span class="line"><span class="comment">#添加文字</span></span><br><span class="line">plt.text(<span class="number">60</span>, <span class="number">.025</span>, <span class="string">r&#x27;$\mu=100,\ \sigma=15$&#x27;</span>)</span><br><span class="line">plt.axis([<span class="number">40</span>, <span class="number">160</span>, <span class="number">0</span>, <span class="number">0.03</span>])</span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/12_%E4%BD%BF%E7%94%A8text%E6%B7%BB%E5%8A%A0%E6%96%87%E5%AD%971.jpg"></p>
+<p>和前面的lines的用法一样，你可以通过在<code>text()</code>输入参数或使用<code>setp()</code>来改变文字样式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">t0 = plt.text(<span class="number">0.35</span>,<span class="number">0.5</span>,<span class="string">&#x27;my text&#x27;</span>)</span><br><span class="line">plt.setp(t0, color=<span class="string">&#x27;b&#x27;</span>,fontsize=<span class="number">24</span>)</span><br><span class="line">t = plt.xlabel(<span class="string">&#x27;my data&#x27;</span>, fontsize=<span class="number">14</span>, color=<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/13_%E4%BD%BF%E7%94%A8text%E6%B7%BB%E5%8A%A0%E6%96%87%E5%AD%972.jpg"></p>
+<h3 id="注释文本"><a href="#注释文本" class="headerlink" title="注释文本"></a>注释文本</h3><p>在数据可视化的过程中，图片中的文字经常被用来注释图中的一些特征。使用<code>annotate()</code>方法可以很方便地添加此类注释。在使用annotate时，要考虑两个点的坐标：被注释的地方<code>xy(x, y)</code>和插入文本的地方<code>xytext(x, y)</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">ax = plt.subplot(<span class="number">111</span>)</span><br><span class="line"></span><br><span class="line">t = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.01</span>)</span><br><span class="line">s = np.cos(<span class="number">2</span>*np.pi*t)</span><br><span class="line">line, = plt.plot(t, s, lw=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">plt.annotate(<span class="string">&#x27;local max&#x27;</span>, xy=(<span class="number">2</span>, <span class="number">1</span>), xytext=(<span class="number">3</span>, <span class="number">1.5</span>),</span><br><span class="line">            arrowprops=<span class="built_in">dict</span>(facecolor=<span class="string">&#x27;black&#x27;</span>, shrink=<span class="number">0.05</span>),</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">plt.ylim(-<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/14_%E6%B3%A8%E9%87%8A%E6%96%87%E6%9C%AC1.jpg"></p>
+<h3 id="添加图例"><a href="#添加图例" class="headerlink" title="添加图例"></a>添加图例</h3><p>本教程将描述几种添加图例的方法。在编程开始前，我们先简单介绍一下在图例中几个需要用到的概念   </p>
+<h4 id="图例项"><a href="#图例项" class="headerlink" title="图例项"></a>图例项</h4><p>一个图例包含多个图例项，每个图例项由图例说明和图例标签构成   </p>
+<h4 id="图例标签"><a href="#图例标签" class="headerlink" title="图例标签"></a>图例标签</h4><p>由彩色的图案构成，位于图例说明的左侧   </p>
+<h4 id="图例说明"><a href="#图例说明" class="headerlink" title="图例说明"></a>图例说明</h4><p>图例标签的说明文字<br>使用legend()函数可以自动添加图例   </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">line_up, = plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], label=<span class="string">&#x27;Line 2&#x27;</span>)</span><br><span class="line">line_down, = plt.plot([<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], label=<span class="string">&#x27;Line 1&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/15_%E6%B3%A8%E9%87%8A%E6%96%87%E6%9C%AC2.jpg"></p>
+<p>添加图例的位置可以用关键词loc来指定</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">211</span>)</span><br><span class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], label=<span class="string">&quot;test1&quot;</span>)</span><br><span class="line">plt.plot([<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], label=<span class="string">&quot;test2&quot;</span>)</span><br><span class="line"><span class="comment"># Place a legend above this legend, expanding itself to</span></span><br><span class="line"><span class="comment"># fully use the given bounding box.</span></span><br><span class="line">plt.legend(bbox_to_anchor=(<span class="number">0.</span>, <span class="number">1.02</span>, <span class="number">1.</span>, <span class="number">.102</span>), loc=<span class="number">3</span>,</span><br><span class="line">           ncol=<span class="number">2</span>, mode=<span class="string">&quot;expand&quot;</span>, borderaxespad=<span class="number">0.</span>)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">223</span>)</span><br><span class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], label=<span class="string">&quot;test1&quot;</span>)</span><br><span class="line">plt.plot([<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], label=<span class="string">&quot;test2&quot;</span>)</span><br><span class="line"><span class="comment"># Place a legend to the right of this smaller figure.</span></span><br><span class="line">plt.legend(bbox_to_anchor=(<span class="number">1.05</span>, <span class="number">1</span>), loc=<span class="number">2</span>, borderaxespad=<span class="number">0.</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1256977701.cos.ap-chengdu.myqcloud.com/Python%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/16_%E6%B3%A8%E9%87%8A%E6%96%87%E6%9C%AC3.jpg"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag"># 数据可视化</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/05/22/Python/%E5%B9%B6%E5%8F%91%E7%88%AC%E5%8F%96%E7%99%BE%E5%BA%A6%E8%B4%B4%E5%90%A7/" rel="prev" title="并发爬取百度贴吧">
+                  <i class="fa fa-angle-left"></i> 并发爬取百度贴吧
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/06/09/Scrapy%E7%88%AC%E8%99%AB%E7%B3%BB%E5%88%97/Scrapy%E7%88%AC%E8%99%AB%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E4%B8%AA%E6%95%B4%E7%AB%99%E7%88%AC%E5%8F%96/" rel="next" title="Scrapy爬虫系列之一个整站爬取">
+                  Scrapy爬虫系列之一个整站爬取 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2015 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">kba977</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"kba977-github-io","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
