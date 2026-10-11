@@ -8,7 +8,7 @@ subtitle:
 description: 什么都略懂一点, 生活更精彩一些
 author: kba977 
 language: zh-CN
-timezone:
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
